@@ -1,2 +1,1 @@
-# novaflix
-NovaFlix Android App
+# CineStream APK
