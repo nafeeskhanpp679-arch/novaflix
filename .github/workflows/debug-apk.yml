@@ -17,13 +17,23 @@ jobs:
           distribution: temurin
           java-version: "21"
 
-      - name: Create debug keystore
+      # Keep the debug signing certificate stable between builds so Firebase
+      # Google Sign-In SHA-1 does not change on every fresh GitHub runner.
+      - name: Restore debug signing key
+        uses: actions/cache@v4
+        with:
+          path: debug.keystore
+          key: novaflix-debug-signing-key-v1
+
+      - name: Create debug keystore if cache is empty
         run: |
           if [ ! -f debug.keystore ]; then
             keytool -genkeypair -v -keystore debug.keystore -storepass android \
               -keypass android -alias androiddebugkey -keyalg RSA -keysize 2048 \
-              -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
+              -validity 10000 -dname "CN=NovaFlix Debug,O=NovaFlix,C=IN"
           fi
+          echo "NovaFlix debug signing SHA-1 (register this in Firebase):"
+          keytool -list -v -keystore debug.keystore -storepass android -alias androiddebugkey | grep "SHA1:"
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
