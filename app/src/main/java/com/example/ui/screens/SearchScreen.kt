@@ -288,69 +288,31 @@ private fun SearchResultCard(
     item: MediaItem,
     onClick: () -> Unit
 ) {
-    val shape = RoundedCornerShape(17.dp)
-    Column(
-        modifier = Modifier.tvFocusRing(shape)
-            .pressScale(onClick)
-            .fillMaxWidth()
-            .clip(shape)
-            .background(Brush.verticalGradient(listOf(Color(0xFF192139), Color(0xFF0D1220))))
-            .border(1.dp, Color(0x303D4C75), shape)
+    val shape = RoundedCornerShape(15.dp)
+    Box(
+        modifier = Modifier.tvFocusRing(shape).pressScale(onClick)
+            .fillMaxWidth().aspectRatio(2f / 3f)
+            .clip(shape).background(Color(0xFF101525))
+            .border(1.dp, Color(0x403D4C75), shape)
             .testTag("search_result_${item.id}")
     ) {
-        Box(
-            modifier = Modifier.fillMaxWidth().aspectRatio(2f / 3f).background(Color(0xFF101525))
-        ) {
-            AsyncImage(
-                model = item.getFullPosterUrl(),
-                contentDescription = item.title,
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
-            )
-            Box(
-                Modifier.fillMaxSize().background(
-                    Brush.verticalGradient(0f to Color(0x08070912), 0.58f to Color.Transparent, 1f to Color(0xD9070912))
-                )
-            )
-            if (item.rating > 0.0) {
-                Row(
-                    Modifier.align(Alignment.TopEnd).padding(7.dp).clip(RoundedCornerShape(8.dp))
-                        .background(Color(0xD9070912)).border(1.dp, Color(0x55FFC857), RoundedCornerShape(8.dp))
-                        .padding(horizontal = 6.dp, vertical = 4.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(Icons.Default.Star, contentDescription = null, tint = Color(0xFFFFC857), modifier = Modifier.size(11.dp))
-                    Spacer(Modifier.width(3.dp))
-                    Text(String.format("%.1f", item.rating), color = Color.White, fontSize = 10.sp, fontWeight = FontWeight.ExtraBold)
-                }
-            }
-            Box(
-                Modifier.align(Alignment.BottomStart).padding(8.dp).clip(RoundedCornerShape(6.dp))
-                    .background(Brush.horizontalGradient(listOf(Color(0xEE5B7CFA), Color(0xEE8B5CF6))))
-                    .padding(horizontal = 7.dp, vertical = 4.dp)
-            ) {
-                Text(item.mediaType.name, color = Color.White, fontSize = 9.sp, fontWeight = FontWeight.ExtraBold, letterSpacing = .5.sp)
+        AsyncImage(model = item.getFullPosterUrl(), contentDescription = item.title, modifier = Modifier.fillMaxSize(), contentScale = ContentScale.Crop)
+        Box(Modifier.fillMaxSize().background(Brush.verticalGradient(0f to Color(0x10070912), .45f to Color.Transparent, .68f to Color(0x8F070912), 1f to Color(0xF5070912))))
+        if (item.rating > 0.0) {
+            Row(Modifier.align(Alignment.TopEnd).padding(7.dp).clip(RoundedCornerShape(8.dp)).background(Color(0xD9070912)).border(1.dp, Color(0x55FFC857), RoundedCornerShape(8.dp)).padding(horizontal = 6.dp, vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+                Icon(Icons.Default.Star, contentDescription = null, tint = Color(0xFFFFC857), modifier = Modifier.size(11.dp))
+                Spacer(Modifier.width(3.dp))
+                Text(String.format("%.1f", item.rating), color = Color.White, fontSize = 10.sp, fontWeight = FontWeight.ExtraBold)
             }
         }
-        Column(Modifier.fillMaxWidth().padding(horizontal = 9.dp, vertical = 10.dp)) {
-            Text(
-                item.title,
-                color = Color(0xFFF5F7FF),
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Bold,
-                maxLines = 2,
-                minLines = 2,
-                lineHeight = 15.sp,
-                overflow = TextOverflow.Ellipsis
-            )
-            Spacer(Modifier.height(5.dp))
-            Text(
-                item.releaseYear.ifBlank { "New release" },
-                color = Color(0xFFAAB4D0),
-                fontSize = 10.sp,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
+        Column(Modifier.align(Alignment.BottomStart).fillMaxWidth().padding(9.dp)) {
+            Box(Modifier.clip(RoundedCornerShape(6.dp)).background(Brush.horizontalGradient(listOf(Color(0xEE5B7CFA), Color(0xEE8B5CF6)))).padding(horizontal = 7.dp, vertical = 4.dp)) {
+                Text(item.mediaType.name, color = Color.White, fontSize = 9.sp, fontWeight = FontWeight.ExtraBold, letterSpacing = .5.sp)
+            }
+            Spacer(Modifier.height(6.dp))
+            Text(item.title, color = Color(0xFFF5F7FF), fontSize = 12.sp, fontWeight = FontWeight.Bold, maxLines = 2, lineHeight = 15.sp, overflow = TextOverflow.Ellipsis)
+            Spacer(Modifier.height(3.dp))
+            Text(item.releaseYear.ifBlank { "New release" }, color = Color(0xFFAAB4D0), fontSize = 10.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
         }
     }
 }
