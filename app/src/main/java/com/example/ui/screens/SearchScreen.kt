@@ -287,63 +287,69 @@ private fun SearchResultCard(
     item: MediaItem,
     onClick: () -> Unit
 ) {
-    Box(
-        modifier = Modifier.pressScale(onClick)
+    val shape = RoundedCornerShape(17.dp)
+    Column(
+        modifier = Modifier.tvFocusRing(shape)
+            .pressScale(onClick)
             .fillMaxWidth()
-            .clip(RoundedCornerShape(12.dp))
-            .background(CardBackground)
-            .border(1.dp, BorderColor, RoundedCornerShape(12.dp))
+            .clip(shape)
+            .background(Brush.verticalGradient(listOf(Color(0xFF192139), Color(0xFF0D1220))))
+            .border(1.dp, Color(0x303D4C75), shape)
             .testTag("search_result_${item.id}")
     ) {
-        Column(modifier = Modifier.fillMaxWidth()) {
+        Box(
+            modifier = Modifier.fillMaxWidth().aspectRatio(2f / 3f).background(Color(0xFF101525))
+        ) {
+            AsyncImage(
+                model = item.getFullPosterUrl(),
+                contentDescription = item.title,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
             Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(2f / 3f)
-                    .background(Color.Black)
-            ) {
-                AsyncImage(
-                    model = item.getFullPosterUrl(),
-                    contentDescription = item.title,
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop
+                Modifier.fillMaxSize().background(
+                    Brush.verticalGradient(0f to Color(0x08070912), 0.58f to Color.Transparent, 1f to Color(0xD9070912))
                 )
-
-                Surface(
-                    color = Color.Black.copy(alpha = 0.85f),
-                    shape = RoundedCornerShape(bottomStart = 6.dp),
-                    modifier = Modifier.align(Alignment.TopEnd)
+            )
+            if (item.rating > 0.0) {
+                Row(
+                    Modifier.align(Alignment.TopEnd).padding(7.dp).clip(RoundedCornerShape(8.dp))
+                        .background(Color(0xD9070912)).border(1.dp, Color(0x55FFC857), RoundedCornerShape(8.dp))
+                        .padding(horizontal = 6.dp, vertical = 4.dp),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Row(
-                        modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(imageVector = Icons.Default.Star, contentDescription = null, tint = Color(0xFFFFC107), modifier = Modifier.size(11.dp))
-                        Spacer(modifier = Modifier.width(2.dp))
-                        Text(text = String.format("%.1f", item.rating), color = Color.White, fontSize = 10.sp, fontWeight = FontWeight.Bold)
-                    }
+                    Icon(Icons.Default.Star, contentDescription = null, tint = Color(0xFFFFC857), modifier = Modifier.size(11.dp))
+                    Spacer(Modifier.width(3.dp))
+                    Text(String.format("%.1f", item.rating), color = Color.White, fontSize = 10.sp, fontWeight = FontWeight.ExtraBold)
                 }
             }
-
-            Column(modifier = Modifier.padding(8.dp)) {
-                Text(
-                    text = item.title,
-                    color = Color.White,
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-
-                Spacer(modifier = Modifier.height(2.dp))
-
-                Text(
-                    text = "${item.releaseYear} • ${item.mediaType.name}",
-                    color = TextSecondaryColor,
-                    fontSize = 10.sp,
-                    maxLines = 1
-                )
+            Box(
+                Modifier.align(Alignment.BottomStart).padding(8.dp).clip(RoundedCornerShape(6.dp))
+                    .background(Brush.horizontalGradient(listOf(Color(0xEE5B7CFA), Color(0xEE8B5CF6))))
+                    .padding(horizontal = 7.dp, vertical = 4.dp)
+            ) {
+                Text(item.mediaType.name, color = Color.White, fontSize = 9.sp, fontWeight = FontWeight.ExtraBold, letterSpacing = .5.sp)
             }
+        }
+        Column(Modifier.fillMaxWidth().padding(horizontal = 9.dp, vertical = 10.dp)) {
+            Text(
+                item.title,
+                color = Color(0xFFF5F7FF),
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Bold,
+                maxLines = 2,
+                minLines = 2,
+                lineHeight = 15.sp,
+                overflow = TextOverflow.Ellipsis
+            )
+            Spacer(Modifier.height(5.dp))
+            Text(
+                item.releaseYear.ifBlank { "New release" },
+                color = Color(0xFFAAB4D0),
+                fontSize = 10.sp,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
         }
     }
 }
