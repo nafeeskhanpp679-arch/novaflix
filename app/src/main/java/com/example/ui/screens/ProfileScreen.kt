@@ -117,9 +117,9 @@ fun ProfileScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(24.dp))
-                    .background(Brush.linearGradient(listOf(Color(0xFF2A0A0E), Color(0xFF14141B), Color(0xFF0F1420))))
-                    .border(1.dp, Line, RoundedCornerShape(24.dp))
-                    .padding(20.dp)
+                    .background(Brush.linearGradient(listOf(Color(0xFF202D59), Color(0xFF17172F), Color(0xFF0D1220))))
+                    .border(1.dp, Color(0x665B7CFA), RoundedCornerShape(24.dp))
+                    .padding(22.dp)
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
                     UserAvatar(photoUrl = state.photoUrl, name = state.name, size = 88.dp)
@@ -150,7 +150,7 @@ fun ProfileScreen(
                                 .height(52.dp)
                         ) {
                             if (state.isBusy) {
-                                CircularProgressIndicator(color = Red, strokeWidth = 2.5.dp, modifier = Modifier.size(20.dp))
+                                CircularProgressIndicator(color = Color(0xFF8B9DFF), strokeWidth = 2.5.dp, modifier = Modifier.size(20.dp))
                             } else {
                                 Box(
                                     modifier = Modifier
@@ -324,7 +324,7 @@ fun ProfileScreen(
             title = { Text("Clear watch history?", color = Color.White) },
             text = { Text("This will reset your Continue Watching progress and total watch time.", color = Dim) },
             confirmButton = {
-                TextButton(modifier = Modifier.tvFocusRing(RoundedCornerShape(50.dp)), onClick = { confirmClear = false; viewModel.clearHistory() }) { Text("Clear", color = Red) }
+                TextButton(modifier = Modifier.tvFocusRing(RoundedCornerShape(50.dp)), onClick = { confirmClear = false; viewModel.clearHistory() }) { Text("Clear", color = Color(0xFF8B9DFF)) }
             },
             dismissButton = { TextButton(modifier = Modifier.tvFocusRing(RoundedCornerShape(50.dp)), onClick = { confirmClear = false }) { Text("Cancel", color = Color.White) } }
         )
@@ -336,7 +336,7 @@ fun ProfileScreen(
             title = { Text("Sign out?", color = Color.White) },
             text = { Text("Your data is safely synced to the cloud and will be restored when you sign in again.", color = Dim) },
             confirmButton = {
-                TextButton(modifier = Modifier.tvFocusRing(RoundedCornerShape(50.dp)), onClick = { confirmSignOut = false; viewModel.signOut() }) { Text("Sign out", color = Red) }
+                TextButton(modifier = Modifier.tvFocusRing(RoundedCornerShape(50.dp)), onClick = { confirmSignOut = false; viewModel.signOut() }) { Text("Sign out", color = Color(0xFF8B9DFF)) }
             },
             dismissButton = { TextButton(modifier = Modifier.tvFocusRing(RoundedCornerShape(50.dp)), onClick = { confirmSignOut = false }) { Text("Cancel", color = Color.White) } }
         )
