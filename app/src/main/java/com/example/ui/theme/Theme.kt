@@ -1,6 +1,5 @@
 package com.example.ui.theme
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
@@ -29,7 +28,7 @@ private val DarkColorScheme = darkColorScheme(
 
 @Composable
 fun CineStreamTheme(
-  darkTheme: Boolean = true, // Streaming app defaults to dark mode
+  darkTheme: Boolean = true,
   content: @Composable () -> Unit,
 ) {
   MaterialTheme(
@@ -38,4 +37,3 @@ fun CineStreamTheme(
     content = content
   )
 }
-
