@@ -683,29 +683,40 @@ private fun ActionIconBtn(
     isActive: Boolean,
     onClick: () -> Unit
 ) {
+    val shape = RoundedCornerShape(15.dp)
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .width(75.dp)
-            .tvFocusRing(RoundedCornerShape(10.dp)).clickable(
+            .width(78.dp)
+            .clip(shape)
+            .background(if (isActive) Color(0x332D4D9B) else Color(0x181A2236))
+            .border(1.dp, if (isActive) Color(0x775B7CFA) else Color(0x22FFFFFF), shape)
+            .tvFocusRing(shape)
+            .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,
                 onClick = onClick
             )
-            .padding(vertical = 6.dp)
+            .padding(horizontal = 7.dp, vertical = 11.dp)
     ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = label,
-            tint = if (isActive) HaiFlixRed else TextSecondaryColor,
-            modifier = Modifier.size(24.dp)
-        )
-        Spacer(modifier = Modifier.height(5.dp))
+        Box(
+            Modifier.size(38.dp).clip(CircleShape)
+                .background(if (isActive) Brush.linearGradient(listOf(Color(0xFF5B7CFA), Color(0xFF8B5CF6))) else Brush.linearGradient(listOf(Color(0xFF252D42), Color(0xFF151B2B)))),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                imageVector = icon,
+                contentDescription = label,
+                tint = if (isActive) Color.White else Color(0xFFC0C9E0),
+                modifier = Modifier.size(20.dp)
+            )
+        }
+        Spacer(modifier = Modifier.height(7.dp))
         Text(
             text = label,
-            fontSize = 12.sp,
-            fontWeight = FontWeight(500),
-            color = if (isActive) HaiFlixRed else TextSecondaryColor
+            fontSize = 10.sp,
+            fontWeight = if (isActive) FontWeight.Bold else FontWeight.Medium,
+            color = if (isActive) Color(0xFF9CAEFF) else Color(0xFFB5BED4)
         )
     }
 }
