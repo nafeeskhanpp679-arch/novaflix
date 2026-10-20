@@ -21,7 +21,6 @@ android {
     versionName = "1.0"
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    buildConfigField("String", "TMDB_API_KEY", "\"8265bd1679663a7ea12ac168da84d2e8\"")
   }
 
   signingConfigs {
@@ -70,7 +69,6 @@ secrets {
   propertiesFileName = ".env"
   defaultPropertiesFileName = ".env.example"
   ignoreList.add("FIREBASE_APPCHECK_DEBUG_TOKEN")
-  ignoreList.add("TMDB_API_KEY")
 }
 
 googleServices { missingGoogleServicesStrategy = MissingGoogleServicesStrategy.WARN }
