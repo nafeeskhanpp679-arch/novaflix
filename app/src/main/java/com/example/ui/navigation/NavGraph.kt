@@ -44,7 +44,6 @@ import com.example.data.auth.AuthManager
 import com.example.data.repository.AppPrefs
 import com.example.data.repository.DownloadRepository
 import com.example.ui.components.rememberFirebaseUser
-import com.example.ui.components.ServerSelectionDialog
 import com.example.data.repository.MediaRepository
 import com.example.data.repository.UserRepository
 import com.example.ui.screens.*
@@ -111,21 +110,6 @@ fun AppNavGraph(
     val downloadsViewModel = remember { DownloadsViewModel(downloadRepository) }
     val profileViewModel = remember { ProfileViewModel(userRepository, mediaRepository, authManager, prefs) }
 
-    var showFirstTimeServerDialog by remember { mutableStateOf(!prefs.hasChosenServer) }
-
-    if (showFirstTimeServerDialog) {
-        ServerSelectionDialog(
-            prefs = prefs,
-            isFirstLaunch = true,
-            onDismiss = { showFirstTimeServerDialog = false },
-            onServerSelected = {
-                showFirstTimeServerDialog = false
-                homeViewModel.loadHomeData(force = true)
-                seriesViewModel.loadSeriesData(force = true)
-                animeViewModel.loadAnimeData(force = true)
-            }
-        )
-    }
 
     val isTv = LocalIsTv.current
     val navEntry by navController.currentBackStackEntryAsState()
