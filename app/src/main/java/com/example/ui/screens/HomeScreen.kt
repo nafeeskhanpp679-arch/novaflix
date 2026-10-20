@@ -86,8 +86,8 @@ import com.example.ui.theme.*
 import com.example.ui.viewmodel.HomeViewModel
 import kotlinx.coroutines.delay
 
-private val NovaFlixRed = Color(0xFFE50914)
-private val NovaFlixRedGlow = Color(0x80E50914)
+private val NovaFlixRed = Color(0xFF5B7CFA)
+private val NovaFlixRedGlow = Color(0x805B7CFA)
 private val HaiFlixRed = NovaFlixRed
 private val HaiFlixRedGlow = NovaFlixRedGlow
 private val DarkBackground = Color(0xFF0B0B0B)
@@ -147,7 +147,7 @@ fun HomeScreen(
                                 modifier = Modifier
                                     .size(32.dp)
                                     .clip(RoundedCornerShape(8.dp))
-                                    .background(Brush.linearGradient(listOf(NovaFlixRed, Color(0xFFFF3344)))),
+                                    .background(Brush.linearGradient(listOf(NovaFlixRed, Color(0xFF8B5CF6)))),
                                 contentAlignment = Alignment.Center
                             ) {
                                 Icon(
@@ -172,14 +172,14 @@ fun HomeScreen(
                             onClick = { showServerDialog = true },
                             shape = RoundedCornerShape(12.dp),
                             color = when (currentServerType) {
-                                ServerConfig.ServerType.MERA_SERVER -> Color(0xFF2E1216)
+                                ServerConfig.ServerType.MERA_SERVER -> Color(0xFF172044)
                                 ServerConfig.ServerType.MOVIEBOX -> Color(0xFF132A18)
                                 ServerConfig.ServerType.CUSTOM -> Color(0xFF132030)
                             },
                             border = BorderStroke(
                                 1.dp,
                                 when (currentServerType) {
-                                    ServerConfig.ServerType.MERA_SERVER -> Color(0xFFE50914).copy(alpha = 0.6f)
+                                    ServerConfig.ServerType.MERA_SERVER -> Color(0xFF5B7CFA).copy(alpha = 0.6f)
                                     ServerConfig.ServerType.MOVIEBOX -> Color(0xFF4CAF50).copy(alpha = 0.6f)
                                     ServerConfig.ServerType.CUSTOM -> Color(0xFF2196F3).copy(alpha = 0.6f)
                                 }
@@ -197,7 +197,7 @@ fun HomeScreen(
                                         .clip(CircleShape)
                                         .background(
                                             when (currentServerType) {
-                                                ServerConfig.ServerType.MERA_SERVER -> Color(0xFFE50914)
+                                                ServerConfig.ServerType.MERA_SERVER -> Color(0xFF5B7CFA)
                                                 ServerConfig.ServerType.MOVIEBOX -> Color(0xFF4CAF50)
                                                 ServerConfig.ServerType.CUSTOM -> Color(0xFF2196F3)
                                             }
@@ -378,14 +378,14 @@ fun HomeScreen(
                                         .clip(RoundedCornerShape(20.dp))
                                         .background(
                                             if (isSelected) {
-                                                Brush.horizontalGradient(listOf(Color(0xFFE50914), Color(0xFFFF334B)))
+                                                Brush.horizontalGradient(listOf(Color(0xFF5B7CFA), Color(0xFF8B5CF6)))
                                             } else {
                                                 SolidColor(CardBackground)
                                             }
                                         )
                                         .border(
                                             1.dp,
-                                            if (isSelected) Color(0xFFFF5268) else BorderColor,
+                                            if (isSelected) Color(0xFF9B8CFF) else BorderColor,
                                             RoundedCornerShape(20.dp)
                                         )
                                         .tvFocusRing(RoundedCornerShape(20.dp)).clickable { viewModel.selectCategory(category) }
