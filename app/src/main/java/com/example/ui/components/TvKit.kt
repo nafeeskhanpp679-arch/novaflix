@@ -198,7 +198,7 @@ fun TvSideRail(
             modifier = Modifier
                 .size(38.dp)
                 .clip(RoundedCornerShape(11.dp))
-                .background(Brush.linearGradient(listOf(Color(0xFF5B7CFA), Color(0xFF8E0A12)))),
+                .background(Brush.linearGradient(listOf(Color(0xFF5B7CFA), Color(0xFF8B5CF6)))),
             contentAlignment = Alignment.Center
         ) {
             Icon(Icons.Default.PlayArrow, contentDescription = "NovaFlix", tint = Color.White, modifier = Modifier.size(24.dp))
@@ -217,7 +217,7 @@ private fun RailButton(item: TvRailItem, selected: Boolean, onClick: () -> Unit)
     val bg by animateColorAsState(
         when {
             focused -> Color.White
-            selected -> Color(0x40E50914)
+            selected -> Color(0x405B7CFA)
             else -> Color.Transparent
         },
         animationSpec = tween(140),
@@ -225,7 +225,7 @@ private fun RailButton(item: TvRailItem, selected: Boolean, onClick: () -> Unit)
     )
     val fg = when {
         focused -> Color(0xFF070912)
-        selected -> Color(0xFFFF4D5A)
+        selected -> Color(0xFF8DA2FF)
         else -> Color(0xFF9A9AA8)
     }
     Column(
@@ -253,7 +253,7 @@ private fun RailButton(item: TvRailItem, selected: Boolean, onClick: () -> Unit)
 // ---------------------------------------------------------------------------
 
 private val TvBg = Color(0xFF070912)
-private val TvRed = Color(0xFF5B7CFA)
+private val TvRed = Color(0xFF6D83FF)
 
 @Composable
 fun TvHeroBanner(
