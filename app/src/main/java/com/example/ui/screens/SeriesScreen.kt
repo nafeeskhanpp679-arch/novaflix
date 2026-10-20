@@ -783,80 +783,71 @@ private fun SeriesCard(
     media: MediaItem,
     onClick: () -> Unit
 ) {
-    val isTv = com.example.ui.components.LocalIsTv.current
-    val cardWidth = if (isTv) 170.dp else 125.dp
-    val cardHeight = if (isTv) 240.dp else 180.dp
-
-    Column(
+    val isTv = LocalIsTv.current
+    val cardWidth = if (isTv) 170.dp else 138.dp
+    val cardHeight = if (isTv) 250.dp else 205.dp
+    Box(
         modifier = Modifier.pressScale(onClick)
             .width(cardWidth)
+            .height(cardHeight)
+            .clip(RoundedCornerShape(14.dp))
+            .background(CardBackground)
+            .border(1.dp, BorderColor, RoundedCornerShape(14.dp))
     ) {
+        AsyncImage(
+            model = media.getFullPosterUrl() ?: media.getFullBackdropUrl(),
+            contentDescription = media.title,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize()
+        )
         Box(
-            modifier = Modifier
-                .width(cardWidth)
-                .height(cardHeight)
-                .clip(RoundedCornerShape(10.dp))
-                .background(CardBackground)
-                .border(1.dp, BorderColor, RoundedCornerShape(10.dp))
-        ) {
-            AsyncImage(
-                model = media.getFullPosterUrl() ?: media.getFullBackdropUrl(),
-                contentDescription = media.title,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize()
+            Modifier.fillMaxSize().background(
+                Brush.verticalGradient(
+                    colorStops = arrayOf(
+                        0.0f to Color.Black.copy(alpha = 0.12f),
+                        0.48f to Color.Transparent,
+                        0.70f to Color.Black.copy(alpha = 0.42f),
+                        1.0f to Color.Black.copy(alpha = 0.96f)
+                    )
+                )
             )
-            if (media.rating > 0) {
-                Box(
-                    modifier = Modifier
-                        .align(Alignment.TopEnd)
-                        .padding(5.dp)
-                        .clip(RoundedCornerShape(4.dp))
-                        .background(Color.Black.copy(alpha = 0.75f))
-                        .padding(horizontal = 4.dp, vertical = 2.dp)
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(2.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Star,
-                            contentDescription = null,
-                            tint = Color(0xFFFFB800),
-                            modifier = Modifier.size(10.dp)
-                        )
-                        Text(
-                            text = String.format("%.1f", media.rating),
-                            color = Color.White,
-                            fontSize = 10.sp,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                }
+        )
+        if (media.rating > 0) {
+            Row(
+                modifier = Modifier.align(Alignment.TopEnd).padding(7.dp)
+                    .clip(RoundedCornerShape(7.dp))
+                    .background(Color.Black.copy(alpha = 0.78f))
+                    .padding(horizontal = 6.dp, vertical = 4.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(3.dp)
+            ) {
+                Icon(Icons.Default.Star, contentDescription = null, tint = Color(0xFFFFC857), modifier = Modifier.size(11.dp))
+                Text(String.format("%.1f", media.rating), color = Color.White, fontSize = 10.sp, fontWeight = FontWeight.Bold)
             }
         }
-        Spacer(modifier = Modifier.height(6.dp))
-        Text(
-            text = media.title,
-            color = Color.White,
-            fontSize = 13.sp,
-            fontWeight = FontWeight.Medium,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis
-        )
-        if (!media.releaseYear.isNullOrBlank() || (media.totalEpisodes ?: 0) > 0) {
+        Column(
+            modifier = Modifier.align(Alignment.BottomStart).fillMaxWidth().padding(horizontal = 9.dp, vertical = 10.dp)
+        ) {
+            Text(
+                text = media.title,
+                color = Color.White,
+                fontSize = if (isTv) 15.sp else 13.sp,
+                fontWeight = FontWeight.Bold,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                lineHeight = if (isTv) 18.sp else 15.sp
+            )
             val subtitle = buildString {
                 if (!media.releaseYear.isNullOrBlank()) append(media.releaseYear)
                 if ((media.totalEpisodes ?: 0) > 0) {
-                    if (isNotEmpty()) append(" • ")
-                    append("${media.totalEpisodes} Eps")
+                    if (isNotEmpty()) append("  •  ")
+                    append("${media.totalEpisodes} Episodes")
                 }
             }
-            Text(
-                text = subtitle,
-                color = TextSecondaryColor,
-                fontSize = 11.sp,
-                maxLines = 1
-            )
+            if (subtitle.isNotBlank()) {
+                Spacer(Modifier.height(3.dp))
+                Text(subtitle, color = Color(0xFFD0D5E3), fontSize = 10.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
+            }
         }
     }
 }
