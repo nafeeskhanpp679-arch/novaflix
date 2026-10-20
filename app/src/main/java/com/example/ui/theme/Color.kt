@@ -2,23 +2,23 @@ package com.example.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val PitchBlack = Color(0xFF0B0B0E)
-val SurfaceDark = Color(0xFF14141B)
-val SurfaceContainerDark = Color(0xFF1E1E28)
-val SurfaceContainerHigh = Color(0xFF282836)
+// NovaFlix cinematic palette: deep midnight surfaces with electric blue and violet.
+val PitchBlack = Color(0xFF070912)
+val SurfaceDark = Color(0xFF0E1220)
+val SurfaceContainerDark = Color(0xFF151B2D)
+val SurfaceContainerHigh = Color(0xFF202942)
 
-val CrimsonRed = Color(0xFFE50914)
-val VibrantRed = Color(0xFFFF2A55)
-val NeonCyan = Color(0xFF00F2FE)
-val GoldenYellow = Color(0xFFFFC107)
+val CrimsonRed = Color(0xFF5B7CFA)
+val VibrantRed = Color(0xFF8B5CF6)
+val NeonCyan = Color(0xFF42D9FF)
+val GoldenYellow = Color(0xFFFFC857)
 
-val NovaFlixRed = Color(0xFFE50914)
-val NovaFlixRedGlow = Color(0x80E50914)
+val NovaFlixRed = Color(0xFF5B7CFA)
+val NovaFlixRedGlow = Color(0x805B7CFA)
 val HaiFlixRed = NovaFlixRed
 val HaiFlixRedGlow = NovaFlixRedGlow
 
-val TextPrimary = Color(0xFFFFFFFF)
-val TextSecondary = Color(0xFFA0A0B2)
-val TextMuted = Color(0xFF6E6E82)
-val OutlineDark = Color(0xFF2D2D3C)
-
+val TextPrimary = Color(0xFFF7F8FF)
+val TextSecondary = Color(0xFFAAB4D0)
+val TextMuted = Color(0xFF707C9E)
+val OutlineDark = Color(0xFF293451)
