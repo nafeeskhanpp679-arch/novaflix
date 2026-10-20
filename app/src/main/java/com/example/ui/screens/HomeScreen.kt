@@ -701,25 +701,20 @@ private fun getAdminCategoryIcon(categoryName: String): androidx.compose.ui.grap
 private fun SectionHeader(title: String, icon: androidx.compose.ui.graphics.vector.ImageVector) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 15.dp, vertical = 12.dp)
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 13.dp)
     ) {
-        // Red accent bar: width: 5px, height: 22px, glow (identical to DetailScreen CategoryHeaderSection)
         Box(
-            modifier = Modifier
-                .width(5.dp)
-                .height(22.dp)
-                .clip(RoundedCornerShape(2.dp))
-                .background(HaiFlixRed)
-        )
-        Spacer(modifier = Modifier.width(10.dp))
-        Text(
-            text = title,
-            fontSize = 20.sp,
-            fontWeight = FontWeight(700),
-            color = Color.White
-        )
+            Modifier.size(34.dp).clip(RoundedCornerShape(11.dp))
+                .background(Brush.linearGradient(listOf(Color(0xFF25315A), Color(0xFF251B45))))
+                .border(1.dp, Color(0x445B7CFA), RoundedCornerShape(11.dp)),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(icon, contentDescription = null, tint = Color(0xFF9CAEFF), modifier = Modifier.size(18.dp))
+        }
+        Spacer(Modifier.width(10.dp))
+        Text(title, fontSize = 18.sp, fontWeight = FontWeight.ExtraBold, color = Color.White, maxLines = 1, overflow = TextOverflow.Ellipsis)
+        Spacer(Modifier.weight(1f))
+        Box(Modifier.width(24.dp).height(3.dp).clip(CircleShape).background(Brush.horizontalGradient(listOf(Color(0xFF5B7CFA), Color(0x008B5CF6)))))
     }
 }
 
@@ -731,8 +726,8 @@ private fun MediaRow(
     val rowState = rememberLazyListState()
     LazyRow(
         state = rowState,
-        contentPadding = PaddingValues(horizontal = 15.dp, vertical = 8.dp),
-        horizontalArrangement = Arrangement.spacedBy(12.dp)
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 7.dp),
+        horizontalArrangement = Arrangement.spacedBy(14.dp)
     ) {
         items(items, key = { it.id }) { item ->
             MediaCard(item = item, onClick = { onItemClick(item) })
@@ -746,106 +741,76 @@ private fun MediaCard(
     onClick: () -> Unit
 ) {
     val isTv = LocalIsTv.current
-    // TV: wider cards look better on big screens; phone keeps 130dp
-    val cardWidth = if (isTv) 175.dp else 130.dp
-    Box(
-        modifier = Modifier.pressScale(onClick)
+    val cardWidth = if (isTv) 184.dp else 142.dp
+    Column(
+        modifier = Modifier.tvFocusRing(RoundedCornerShape(17.dp))
+            .pressScale(onClick)
             .width(cardWidth)
-            .clip(RoundedCornerShape(12.dp))
-            .background(CardBackground)
-            .border(1.dp, BorderColor, RoundedCornerShape(12.dp))
+            .clip(RoundedCornerShape(17.dp))
+            .background(Brush.verticalGradient(listOf(Color(0xFF151B2D), Color(0xFF0B0F1B))))
+            .border(1.dp, Color(0x302F3D62), RoundedCornerShape(17.dp))
             .testTag("media_card_${item.id}")
     ) {
-        Column(modifier = Modifier.fillMaxWidth()) {
+        Box(
+            modifier = Modifier.fillMaxWidth().aspectRatio(2f / 3f).background(Color(0xFF101525))
+        ) {
+            AsyncImage(
+                model = coil.request.ImageRequest.Builder(LocalContext.current)
+                    .data(item.getFullPosterUrl())
+                    .crossfade(true)
+                    .build(),
+                contentDescription = item.title,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
             Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(2f / 3f)
-                    .background(Color.Black)
-            ) {
-                val context = LocalContext.current
-                AsyncImage(
-                    model = coil.request.ImageRequest.Builder(context)
-                        .data(item.getFullPosterUrl())
-                        .crossfade(true)
-                        .build(),
-                    contentDescription = item.title,
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop
+                Modifier.fillMaxSize().background(
+                    Brush.verticalGradient(0f to Color(0x10070912), 0.58f to Color.Transparent, 1f to Color(0xD9070912))
                 )
-
-                // Rating badge in top-right
-                Surface(
-                    color = Color.Black.copy(alpha = 0.80f),
-                    shape = RoundedCornerShape(bottomStart = 8.dp),
-                    modifier = Modifier.align(Alignment.TopEnd)
+            )
+            if (item.rating > 0.0) {
+                Row(
+                    Modifier.align(Alignment.TopEnd).padding(8.dp)
+                        .clip(RoundedCornerShape(8.dp)).background(Color(0xD9070912))
+                        .border(1.dp, Color(0x44FFC857), RoundedCornerShape(8.dp))
+                        .padding(horizontal = 7.dp, vertical = 5.dp),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Row(
-                        modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Star,
-                            contentDescription = null,
-                            tint = Color(0xFFFFC107),
-                            modifier = Modifier.size(11.dp)
-                        )
-                        Spacer(modifier = Modifier.width(3.dp))
-                        Text(
-                            text = String.format("%.1f", item.rating),
-                            color = Color.White,
-                            fontSize = 10.sp,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
+                    Icon(Icons.Default.Star, contentDescription = null, tint = Color(0xFFFFC857), modifier = Modifier.size(12.dp))
+                    Spacer(Modifier.width(3.dp))
+                    Text(String.format("%.1f", item.rating), color = Color.White, fontSize = 10.sp, fontWeight = FontWeight.ExtraBold)
                 }
-
-                // Bottom title gradient overlay like DetailScreen ContentCardView
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(
-                            Brush.verticalGradient(
-                                listOf(Color.Transparent, Color.Black.copy(alpha = 0.85f)),
-                                startY = 120f
-                            )
-                        )
-                )
-
-                // Title overlay at bottom of poster
-                Text(
-                    text = item.title,
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight(600),
-                    color = Color.White,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .align(Alignment.BottomCenter)
-                        .fillMaxWidth()
-                        .padding(horizontal = 6.dp, vertical = 8.dp)
-                )
             }
-
-            // Subtitle info row (year & media type)
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 8.dp, vertical = 6.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+            Box(
+                Modifier.align(Alignment.BottomStart).padding(9.dp)
+                    .clip(RoundedCornerShape(6.dp))
+                    .background(Brush.horizontalGradient(listOf(Color(0xEE5B7CFA), Color(0xEE8B5CF6))))
+                    .padding(horizontal = 7.dp, vertical = 4.dp)
             ) {
+                Text(item.mediaType.name, color = Color.White, fontSize = 9.sp, fontWeight = FontWeight.ExtraBold, letterSpacing = .6.sp)
+            }
+        }
+        Column(Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 10.dp)) {
+            Text(
+                item.title,
+                color = Color(0xFFF6F7FF),
+                fontSize = if (isTv) 14.sp else 12.sp,
+                fontWeight = FontWeight.Bold,
+                maxLines = 2,
+                minLines = 2,
+                lineHeight = 16.sp,
+                overflow = TextOverflow.Ellipsis
+            )
+            Spacer(Modifier.height(5.dp))
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(5.dp)) {
+                Icon(Icons.Default.Movie, contentDescription = null, tint = Color(0xFF7C8BAE), modifier = Modifier.size(12.dp))
                 Text(
-                    text = item.releaseYear,
-                    color = TextSecondaryColor,
-                    fontSize = 11.sp
-                )
-                Text(
-                    text = item.mediaType.name,
-                    color = HaiFlixRed,
+                    item.releaseYear.ifBlank { "New release" },
+                    color = Color(0xFFAAB4D0),
                     fontSize = 10.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Medium,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
             }
         }
