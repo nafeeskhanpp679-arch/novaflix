@@ -222,59 +222,41 @@ private fun WatchLibraryCard(
     onClick: () -> Unit,
     onPlayClick: () -> Unit
 ) {
-    Box(
-        modifier = Modifier.pressScale(onClick)
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(12.dp))
-            .background(CardBackground)
-            .border(1.dp, BorderColor, RoundedCornerShape(12.dp))
+    val shape = RoundedCornerShape(17.dp)
+    Column(
+        modifier = Modifier.tvFocusRing(shape).pressScale(onClick)
+            .fillMaxWidth().clip(shape)
+            .background(Brush.verticalGradient(listOf(Color(0xFF192139), Color(0xFF0D1220))))
+            .border(1.dp, Color(0x303D4C75), shape)
             .testTag("my_list_item_${item.id}")
     ) {
-        Column(modifier = Modifier.fillMaxWidth()) {
+        Box(Modifier.fillMaxWidth().aspectRatio(2f / 3f).background(Color(0xFF101525))) {
+            AsyncImage(
+                model = item.getFullPosterUrl() ?: item.getFullBackdropUrl(),
+                contentDescription = item.title,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+            Box(Modifier.fillMaxSize().background(Brush.verticalGradient(0f to Color.Transparent, .65f to Color.Transparent, 1f to Color(0xC9070912))))
             Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(2f / 3f)
-                    .background(Color.Black)
+                Modifier.align(Alignment.BottomStart).padding(8.dp).clip(RoundedCornerShape(6.dp))
+                    .background(Brush.horizontalGradient(listOf(Color(0xEE5B7CFA), Color(0xEE8B5CF6))))
+                    .padding(horizontal = 7.dp, vertical = 4.dp)
             ) {
-                AsyncImage(
-                    model = item.getFullPosterUrl() ?: item.getFullBackdropUrl(),
-                    contentDescription = item.title,
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop
-                )
-
-                // TV: OK on the card opens details; the extra play overlay is touch-only
-                if (!LocalIsTv.current) IconButton(
+                Text(item.mediaType, color = Color.White, fontSize = 9.sp, fontWeight = FontWeight.ExtraBold)
+            }
+            if (!LocalIsTv.current) {
+                IconButton(
                     onClick = onPlayClick,
-                    modifier = Modifier.tvFocusRing(CircleShape)
-                        .align(Alignment.Center)
-                        .background(HaiFlixRed.copy(alpha = 0.9f), shape = CircleShape)
-                        .size(38.dp)
+                    modifier = Modifier.tvFocusRing(CircleShape).align(Alignment.Center)
+                        .background(Color(0xE65B7CFA), CircleShape).size(42.dp)
                 ) {
-                    Icon(imageVector = Icons.Default.PlayArrow, contentDescription = "Play", tint = Color.White, modifier = Modifier.size(20.dp))
+                    Icon(Icons.Default.PlayArrow, contentDescription = "Play", tint = Color.White, modifier = Modifier.size(22.dp))
                 }
             }
-
-            Column(modifier = Modifier.padding(8.dp)) {
-                Text(
-                    text = item.title,
-                    color = Color.White,
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-
-                Spacer(modifier = Modifier.height(2.dp))
-
-                Text(
-                    text = item.mediaType,
-                    color = HaiFlixRed,
-                    fontSize = 10.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            }
+        }
+        Column(Modifier.fillMaxWidth().padding(horizontal = 9.dp, vertical = 10.dp)) {
+            Text(item.title, color = Color(0xFFF5F7FF), fontSize = 12.sp, fontWeight = FontWeight.Bold, maxLines = 2, minLines = 2, lineHeight = 15.sp, overflow = TextOverflow.Ellipsis)
         }
     }
 }
