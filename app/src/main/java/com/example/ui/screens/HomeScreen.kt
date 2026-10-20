@@ -554,202 +554,131 @@ private fun HeroBannerSection(
     onPlayClick: (MediaItem) -> Unit,
     onDetailClick: (MediaItem) -> Unit
 ) {
+    if (featuredItems.isEmpty()) return
     if (LocalIsTv.current) {
-        TvHeroBanner(items = featuredItems, tagLabel = "FEATURED", onPlay = onPlayClick, onDetails = onDetailClick)
+        TvHeroBanner(items = featuredItems, tagLabel = "NOVAFLIX ORIGINALS", onPlay = onPlayClick, onDetails = onDetailClick)
         return
     }
+
     val pagerState = rememberPagerState(pageCount = { featuredItems.size })
-    
-    // Auto-scroll logic
-    LaunchedEffect(Unit) {
-        while (true) {
-            delay(5000)
-            if (pagerState.pageCount > 0) {
-                pagerState.animateScrollToPage((pagerState.currentPage + 1) % pagerState.pageCount)
-            }
+    LaunchedEffect(featuredItems.size) {
+        while (featuredItems.size > 1) {
+            delay(6500)
+            val count = pagerState.pageCount
+            if (count > 1) pagerState.animateScrollToPage((pagerState.currentPage + 1) % count)
         }
     }
 
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(460.dp)
+    Column(
+        modifier = Modifier.fillMaxWidth().padding(top = 6.dp, bottom = 8.dp)
     ) {
         HorizontalPager(
             state = pagerState,
-            modifier = Modifier.fillMaxSize()
+            contentPadding = PaddingValues(horizontal = 12.dp),
+            pageSpacing = 12.dp,
+            modifier = Modifier.fillMaxWidth()
         ) { page ->
-            val mediaItem = featuredItems[page]
+            val media = featuredItems[page]
             Box(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .tvFocusRing(RoundedCornerShape(10.dp)).clickable(onClick = { onDetailClick(mediaItem) })
+                    .fillMaxWidth()
+                    .height(500.dp)
+                    .clip(RoundedCornerShape(26.dp))
+                    .background(CardBackground)
+                    .border(1.dp, Color(0x365B7CFA), RoundedCornerShape(26.dp))
+                    .tvFocusRing(RoundedCornerShape(26.dp))
+                    .clickable { onDetailClick(media) }
             ) {
                 AsyncImage(
-                    model = mediaItem.getFullBackdropUrl(),
-                    contentDescription = mediaItem.title,
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop
+                    model = media.getFullBackdropUrl() ?: media.getFullPosterUrl(),
+                    contentDescription = media.title,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.fillMaxSize()
                 )
-
-                // Deep cinematic gradient overlay seamlessly blending into DarkBackground
                 Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(
-                            Brush.verticalGradient(
-                                colorStops = arrayOf(
-                                    0.0f to Color.Transparent,
-                                    0.40f to Color.Transparent,
-                                    0.72f to DarkBackground.copy(alpha = 0.85f),
-                                    1.0f to DarkBackground
-                                )
-                            )
+                    Modifier.fillMaxSize().background(
+                        Brush.verticalGradient(
+                            0f to Color(0x12070912),
+                            0.28f to Color(0x10070912),
+                            0.53f to Color(0x8C070912),
+                            0.74f to Color(0xF5070912),
+                            1f to DarkBackground
                         )
+                    )
                 )
-
+                Box(
+                    Modifier.fillMaxWidth().height(150.dp).align(Alignment.BottomCenter).background(
+                        Brush.verticalGradient(listOf(Color.Transparent, DarkBackground))
+                    )
+                )
                 Column(
-                    modifier = Modifier
-                        .align(Alignment.BottomStart)
-                        .padding(horizontal = 20.dp, vertical = 24.dp)
+                    modifier = Modifier.align(Alignment.BottomStart).fillMaxWidth().padding(start = 20.dp, end = 20.dp, bottom = 24.dp)
                 ) {
-                    // Category & Featured Badge
-                    Box(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(20.dp))
-                            .background(HaiFlixRed)
-                            .padding(horizontal = 12.dp, vertical = 4.dp)
-                    ) {
-                        Text(
-                            text = "FEATURED",
-                            fontSize = 11.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.White,
-                            letterSpacing = 0.8.sp
-                        )
+                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Box(Modifier.clip(RoundedCornerShape(7.dp)).background(Brush.horizontalGradient(listOf(Color(0xFF5B7CFA), Color(0xFF8B5CF6)))).padding(horizontal = 10.dp, vertical = 6.dp)) {
+                            Text("FEATURED", color = Color.White, fontSize = 10.sp, fontWeight = FontWeight.ExtraBold, letterSpacing = 1.4.sp)
+                        }
+                        Text(media.mediaType.name, color = Color.White.copy(alpha = .9f), fontSize = 11.sp, fontWeight = FontWeight.Bold)
                     }
-
-                    Spacer(modifier = Modifier.height(10.dp))
-
-                    Text(
-                        text = mediaItem.title,
-                        fontSize = 28.sp,
-                        fontWeight = FontWeight(700),
-                        color = Color.White,
-                        lineHeight = 34.sp,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis
-                    )
-
-                    Spacer(modifier = Modifier.height(6.dp))
-
-                    // Meta Row (Rating, Year, Genre)
-                    val ratingStr = if (mediaItem.rating > 0.0) String.format("%.1f", mediaItem.rating) else "N/A"
-                    val yearStr = if (mediaItem.releaseYear.isNotBlank()) mediaItem.releaseYear else "2024"
-                    val genreStr = mediaItem.genres.firstOrNull()?.let { " ・ $it" } ?: ""
-                    Text(
-                        text = "★ $ratingStr ・ $yearStr$genreStr",
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight(500),
-                        color = TextSecondaryColor
-                    )
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
+                    Spacer(Modifier.height(12.dp))
+                    Text(media.title, color = Color.White, fontSize = 30.sp, lineHeight = 35.sp, fontWeight = FontWeight.ExtraBold, maxLines = 2, overflow = TextOverflow.Ellipsis)
+                    Spacer(Modifier.height(8.dp))
+                    val meta = listOfNotNull(
+                        if (media.rating > 0.0) "★ " + String.format("%.1f", media.rating) else null,
+                        media.releaseYear.takeIf { it.isNotBlank() },
+                        media.genres.firstOrNull()
+                    ).joinToString("  •  ")
+                    if (meta.isNotBlank()) Text(meta, color = Color(0xFFD7DDF0), fontSize = 12.sp, fontWeight = FontWeight.Medium, maxLines = 1)
+                    if (media.overview.isNotBlank()) {
+                        Spacer(Modifier.height(8.dp))
+                        Text(media.overview, color = Color(0xFFB7C0D7), fontSize = 12.sp, lineHeight = 18.sp, maxLines = 2, overflow = TextOverflow.Ellipsis)
+                    }
+                    Spacer(Modifier.height(18.dp))
+                    Row(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.CenterVertically) {
+                        Button(
+                            onClick = { onPlayClick(media) },
+                            shape = RoundedCornerShape(14.dp),
+                            colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Color(0xFF080B15)),
+                            modifier = Modifier.height(48.dp).tvFocusRing(RoundedCornerShape(14.dp)).testTag("hero_play_button")
+                        ) {
+                            Icon(Icons.Default.PlayArrow, contentDescription = null, modifier = Modifier.size(21.dp))
+                            Spacer(Modifier.width(6.dp))
+                            Text("Watch now", fontWeight = FontWeight.ExtraBold, fontSize = 14.sp)
+                        }
+                        OutlinedButton(
+                            onClick = { onDetailClick(media) },
+                            shape = RoundedCornerShape(14.dp),
+                            border = BorderStroke(1.dp, Color.White.copy(alpha = .55f)),
+                            colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.White),
+                            modifier = Modifier.height(48.dp).tvFocusRing(RoundedCornerShape(14.dp))
+                        ) {
+                            Icon(Icons.Default.Info, contentDescription = null, modifier = Modifier.size(18.dp))
+                            Spacer(Modifier.width(5.dp))
+                            Text("Details", fontWeight = FontWeight.Bold, fontSize = 13.sp)
+                        }
+                    }
+                }
+                if (featuredItems.size > 1) {
                     Row(
-                        horizontalArrangement = Arrangement.spacedBy(14.dp),
+                        Modifier.align(Alignment.TopEnd).padding(16.dp).clip(CircleShape).background(Color(0x99070912)).padding(horizontal = 10.dp, vertical = 7.dp),
+                        horizontalArrangement = Arrangement.spacedBy(5.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        // Signature Glowing Red PLAY Button (DetailScreen .btn-play-full style)
-                        Button(
-                            onClick = { onPlayClick(mediaItem) },
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = HaiFlixRed,
-                                contentColor = Color.White
-                            ),
-                            shape = RoundedCornerShape(50.dp),
-                            modifier = Modifier.tvFocusRing(RoundedCornerShape(50.dp))
-                                .height(48.dp)
-                                .shadow(
-                                    elevation = 15.dp,
-                                    shape = RoundedCornerShape(50.dp),
-                                    ambientColor = HaiFlixRed,
-                                    spotColor = HaiFlixRed
-                                )
-                                .testTag("hero_play_button")
-                        ) {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                Icon(
-                                    imageVector = Icons.Default.PlayArrow,
-                                    contentDescription = null,
-                                    tint = Color.White,
-                                    modifier = Modifier.size(20.dp)
-                                )
-                                Spacer(modifier = Modifier.width(8.dp))
-                                Text(
-                                    text = "PLAY",
-                                    fontSize = 15.sp,
-                                    fontWeight = FontWeight(700),
-                                    letterSpacing = 1.sp,
-                                    color = Color.White
-                                )
-                            }
-                        }
-
-                        // Modern Pill Details Button
-                        Box(
-                            modifier = Modifier
-                                .height(48.dp)
-                                .clip(RoundedCornerShape(50.dp))
-                                .background(CardBackground.copy(alpha = 0.85f))
-                                .border(1.dp, BorderColor, RoundedCornerShape(50.dp))
-                                .tvFocusRing(RoundedCornerShape(50.dp)).clickable { onDetailClick(mediaItem) }
-                                .padding(horizontal = 22.dp)
-                                .testTag("hero_detail_button"),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                Icon(
-                                    imageVector = Icons.Default.Info,
-                                    contentDescription = null,
-                                    tint = Color.White,
-                                    modifier = Modifier.size(18.dp)
-                                )
-                                Spacer(modifier = Modifier.width(8.dp))
-                                Text(
-                                    text = "DETAILS",
-                                    fontSize = 14.sp,
-                                    fontWeight = FontWeight(700),
-                                    color = Color.White,
-                                    letterSpacing = 1.sp
-                                )
-                            }
-                        }
+                        Text("${page + 1} / ${featuredItems.size}", color = Color.White, fontSize = 10.sp, fontWeight = FontWeight.Bold)
                     }
                 }
             }
         }
-
-        // Pager Indicators (expanding active pill)
         Row(
-            Modifier
-                .wrapContentHeight()
-                .fillMaxWidth()
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 12.dp),
-            horizontalArrangement = Arrangement.Center
+            Modifier.fillMaxWidth().padding(top = 12.dp),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            repeat(pagerState.pageCount) { iteration ->
-                val isCurrent = pagerState.currentPage == iteration
-                val color = if (isCurrent) HaiFlixRed else Color.White.copy(alpha = 0.4f)
-                val width = if (isCurrent) 18.dp else 6.dp
+            repeat(featuredItems.size) { i ->
                 Box(
-                    modifier = Modifier
-                        .padding(horizontal = 3.dp)
-                        .height(6.dp)
-                        .width(width)
-                        .clip(RoundedCornerShape(3.dp))
-                        .background(color)
+                    Modifier.padding(horizontal = 3.dp).width(if (pagerState.currentPage == i) 22.dp else 6.dp).height(5.dp)
+                        .clip(CircleShape)
+                        .background(if (pagerState.currentPage == i) Color(0xFF7B8DFF) else Color(0xFF3A4258))
                 )
             }
         }
