@@ -52,7 +52,7 @@ import kotlinx.coroutines.delay
 import org.json.JSONObject
 import java.io.ByteArrayInputStream
 
-private val Accent = Color(0xFFE50914)
+private val Accent = Color(0xFF5B7CFA)
 
 // Stream payload regex
 private val StreamUrlPattern = Regex("""\.(m3u8|mp4|mkv)(\?|$)""", RegexOption.IGNORE_CASE)
