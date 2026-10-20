@@ -64,8 +64,12 @@ class AuthManager(context: Context) {
     } catch (e: Exception) { null }
 
     private fun setupHint(): String =
-        "\n\nFirebase console > Project settings > com.novaflix.app > Add fingerprint:\nSHA-1: ${signingSha1() ?: "?"}\n" +
-            "(and enable Google sign-in under Authentication > Sign-in method)"
+        "\n\nGoogle Sign-In setup required for NovaFlix:\n" +
+            "1. Firebase Console > Project settings > Your apps > com.novaflix.app.\n" +
+            "2. Add this APK signing SHA-1: ${signingSha1() ?: "?"}\n" +
+            "3. Authentication > Sign-in method > enable Google.\n" +
+            "4. Download the refreshed google-services.json and replace app/google-services.json, then rebuild.\n" +
+            "The installed APK must be signed with the same certificate whose SHA-1 is registered."
 
     private fun webClientId(): String {
         val id = appContext.resources.getIdentifier("default_web_client_id", "string", appContext.packageName)
