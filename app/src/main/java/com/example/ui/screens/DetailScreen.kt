@@ -56,10 +56,10 @@ import com.example.ui.theme.*
 import com.example.ui.viewmodel.DetailViewModel
 
 // Exact CSS-equivalent colors from HTML template
-private val HaiFlixRed = Color(0xFFE50914)
+private val HaiFlixRed = Color(0xFF5B7CFA)
 private val HaiFlixRedGlow = Color(0x80E50914)
-private val DarkBackground = Color(0xFF0B0B0B)
-private val CardBackground = Color(0xFF101010)
+private val DarkBackground = Color(0xFF070912)
+private val CardBackground = Color(0xFF0E1220)
 private val BorderColor = Color(0x1AFFFFFF)
 private val TextSecondaryColor = Color(0xFFA0A0A0)
 
