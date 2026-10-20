@@ -432,42 +432,6 @@ fun VidukiPlayerScreen(
             }
         }
 
-        // Bottom server selector (auto-hides together with the top bar)
-        AnimatedVisibility(
-            visible = controlsVisible,
-            enter = fadeIn(),
-            exit = fadeOut(),
-            modifier = Modifier.align(Alignment.BottomStart)
-        ) {
-            LazyRow(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Color.Black.copy(alpha = 0.55f))
-                    .padding(horizontal = 12.dp, vertical = 10.dp),
-                horizontalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
-                items(VidukiProvider.Api.fallbackOrder) { api ->
-                    val active = api == currentApi
-                    Box(
-                        modifier = Modifier
-                            .tvFocusRing(RoundedCornerShape(50))
-                            .clip(RoundedCornerShape(50))
-                            .background(if (active) Accent else Color.White.copy(alpha = 0.12f))
-                            .clickable {
-                                pokeControls()
-                                if (!active) loadServer(api, manual = true)
-                            }
-                            .padding(horizontal = 16.dp, vertical = 10.dp)
-                    ) {
-                        Text(
-                            api.displayName,
-                            color = Color.White,
-                            fontSize = 13.sp,
-                            fontWeight = if (active) FontWeight.Bold else FontWeight.Medium
-                        )
-                    }
-                }
-            }
-        }
+
     }
 }
