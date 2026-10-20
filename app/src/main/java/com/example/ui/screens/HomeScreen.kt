@@ -742,77 +742,76 @@ private fun MediaCard(
 ) {
     val isTv = LocalIsTv.current
     val cardWidth = if (isTv) 184.dp else 142.dp
-    Column(
-        modifier = Modifier.tvFocusRing(RoundedCornerShape(17.dp))
+    val shape = RoundedCornerShape(17.dp)
+    Box(
+        modifier = Modifier.tvFocusRing(shape)
             .pressScale(onClick)
             .width(cardWidth)
-            .clip(RoundedCornerShape(17.dp))
-            .background(Brush.verticalGradient(listOf(Color(0xFF151B2D), Color(0xFF0B0F1B))))
-            .border(1.dp, Color(0x302F3D62), RoundedCornerShape(17.dp))
+            .aspectRatio(2f / 3f)
+            .clip(shape)
+            .background(Color(0xFF101525))
+            .border(1.dp, Color(0x403D4C75), shape)
             .testTag("media_card_${item.id}")
     ) {
+        AsyncImage(
+            model = coil.request.ImageRequest.Builder(LocalContext.current)
+                .data(item.getFullPosterUrl())
+                .crossfade(true)
+                .build(),
+            contentDescription = item.title,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
         Box(
-            modifier = Modifier.fillMaxWidth().aspectRatio(2f / 3f).background(Color(0xFF101525))
-        ) {
-            AsyncImage(
-                model = coil.request.ImageRequest.Builder(LocalContext.current)
-                    .data(item.getFullPosterUrl())
-                    .crossfade(true)
-                    .build(),
-                contentDescription = item.title,
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
-            )
-            Box(
-                Modifier.fillMaxSize().background(
-                    Brush.verticalGradient(0f to Color(0x10070912), 0.58f to Color.Transparent, 1f to Color(0xD9070912))
+            Modifier.fillMaxSize().background(
+                Brush.verticalGradient(
+                    0f to Color(0x18070912),
+                    0.45f to Color.Transparent,
+                    0.68f to Color(0x8F070912),
+                    1f to Color(0xF5070912)
                 )
             )
-            if (item.rating > 0.0) {
-                Row(
-                    Modifier.align(Alignment.TopEnd).padding(8.dp)
-                        .clip(RoundedCornerShape(8.dp)).background(Color(0xD9070912))
-                        .border(1.dp, Color(0x44FFC857), RoundedCornerShape(8.dp))
-                        .padding(horizontal = 7.dp, vertical = 5.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(Icons.Default.Star, contentDescription = null, tint = Color(0xFFFFC857), modifier = Modifier.size(12.dp))
-                    Spacer(Modifier.width(3.dp))
-                    Text(String.format("%.1f", item.rating), color = Color.White, fontSize = 10.sp, fontWeight = FontWeight.ExtraBold)
-                }
+        )
+        if (item.rating > 0.0) {
+            Row(
+                Modifier.align(Alignment.TopEnd).padding(8.dp)
+                    .clip(RoundedCornerShape(8.dp)).background(Color(0xD9070912))
+                    .border(1.dp, Color(0x55FFC857), RoundedCornerShape(8.dp))
+                    .padding(horizontal = 7.dp, vertical = 5.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(Icons.Default.Star, contentDescription = null, tint = Color(0xFFFFC857), modifier = Modifier.size(12.dp))
+                Spacer(Modifier.width(3.dp))
+                Text(String.format("%.1f", item.rating), color = Color.White, fontSize = 10.sp, fontWeight = FontWeight.ExtraBold)
             }
+        }
+        Column(Modifier.align(Alignment.BottomStart).fillMaxWidth().padding(10.dp)) {
             Box(
-                Modifier.align(Alignment.BottomStart).padding(9.dp)
-                    .clip(RoundedCornerShape(6.dp))
+                Modifier.clip(RoundedCornerShape(6.dp))
                     .background(Brush.horizontalGradient(listOf(Color(0xEE5B7CFA), Color(0xEE8B5CF6))))
                     .padding(horizontal = 7.dp, vertical = 4.dp)
             ) {
                 Text(item.mediaType.name, color = Color.White, fontSize = 9.sp, fontWeight = FontWeight.ExtraBold, letterSpacing = .6.sp)
             }
-        }
-        Column(Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 10.dp)) {
+            Spacer(Modifier.height(7.dp))
             Text(
                 item.title,
                 color = Color(0xFFF6F7FF),
                 fontSize = if (isTv) 14.sp else 12.sp,
                 fontWeight = FontWeight.Bold,
                 maxLines = 2,
-                minLines = 2,
-                lineHeight = 16.sp,
+                lineHeight = 15.sp,
                 overflow = TextOverflow.Ellipsis
             )
-            Spacer(Modifier.height(5.dp))
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(5.dp)) {
-                Icon(Icons.Default.Movie, contentDescription = null, tint = Color(0xFF7C8BAE), modifier = Modifier.size(12.dp))
-                Text(
-                    item.releaseYear.ifBlank { "New release" },
-                    color = Color(0xFFAAB4D0),
-                    fontSize = 10.sp,
-                    fontWeight = FontWeight.Medium,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
+            Spacer(Modifier.height(3.dp))
+            Text(
+                item.releaseYear.ifBlank { "New release" },
+                color = Color(0xFFB9C3DF),
+                fontSize = 10.sp,
+                fontWeight = FontWeight.Medium,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
         }
     }
 }
