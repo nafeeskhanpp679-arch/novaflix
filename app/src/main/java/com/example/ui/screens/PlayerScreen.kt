@@ -1534,19 +1534,7 @@ fun PlayerScreen(
                                 )
                             }
                         }
-                        if (sources.isNotEmpty()) {
-                            item { PanelHeader("Server Stream Links") }
-                            items(sources) { src ->
-                                PanelRow(
-                                    label = sourceLabel(src),
-                                    selected = src == activeSource,
-                                    onClick = {
-                                        panel = PlayerPanel.None
-                                        if (src != activeSource) viewModel.selectSource(src)
-                                    }
-                                )
-                            }
-                        }
+
                     }
                     PlayerPanel.Audio -> {
                         items(audioOptions) { opt ->
