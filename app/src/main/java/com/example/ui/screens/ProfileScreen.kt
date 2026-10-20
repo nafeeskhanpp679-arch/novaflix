@@ -42,8 +42,6 @@ import coil.compose.AsyncImage
 import com.example.data.local.WatchItemEntity
 import com.example.data.model.MediaType
 import com.example.data.repository.AppPrefs
-import com.example.data.repository.ServerConfig
-import com.example.ui.components.ServerSelectionDialog
 import com.example.ui.components.UserAvatar
 import com.example.ui.components.pressScale
 import com.example.ui.viewmodel.ProfileViewModel
@@ -77,9 +75,6 @@ fun ProfileScreen(
     val snackbar = remember { SnackbarHostState() }
     var confirmClear by remember { mutableStateOf(false) }
     var confirmSignOut by remember { mutableStateOf(false) }
-    var showServerSettingsDialog by remember { mutableStateOf(false) }
-    val currentServerType by ServerConfig.currentServer.collectAsState()
-    val customUrl by ServerConfig.customBaseUrl.collectAsState()
     val prefs = remember { AppPrefs.get(context) }
 
     LaunchedEffect(state.message) {
@@ -251,28 +246,6 @@ fun ProfileScreen(
                 )
             }
 
-            // ---------------- server & sources ----------------
-            SectionTitle("Server & Sources")
-            SettingsCard {
-                ClickRow(
-                    icon = Icons.Default.Dns,
-                    title = "Active Server",
-                    subtitle = when (currentServerType) {
-                        ServerConfig.ServerType.MERA_SERVER -> "Primary Server (Admin Uploads)"
-                        ServerConfig.ServerType.MOVIEBOX -> "MovieBox Server (ElitePlex API)"
-                        ServerConfig.ServerType.CUSTOM -> "Custom Server ($customUrl)"
-                    },
-                    onClick = { showServerSettingsDialog = true }
-                )
-                RowDivider()
-                ClickRow(
-                    icon = Icons.Default.SwapHoriz,
-                    title = "Change Streaming Server",
-                    subtitle = "Switch between Primary Server, MovieBox, or custom endpoints",
-                    onClick = { showServerSettingsDialog = true }
-                )
-            }
-
             // ---------------- display ----------------
             SectionTitle("Display")
             SettingsCard {
@@ -306,16 +279,7 @@ fun ProfileScreen(
         }
     }
 
-    if (showServerSettingsDialog) {
-        ServerSelectionDialog(
-            prefs = prefs,
-            isFirstLaunch = false,
-            onDismiss = { showServerSettingsDialog = false },
-            onServerSelected = {
-                showServerSettingsDialog = false
-            }
-        )
-    }
+
 
     if (confirmClear) {
         AlertDialog(
