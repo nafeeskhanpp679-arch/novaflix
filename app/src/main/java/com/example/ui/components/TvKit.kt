@@ -187,9 +187,9 @@ fun TvSideRail(
     Column(
         modifier = modifier
             .fillMaxHeight()
-            .width(84.dp)
-            .background(Brush.horizontalGradient(listOf(Color(0xFF14141A), Color(0xFF070912))))
-            .padding(horizontal = 8.dp, vertical = 14.dp)
+            .width(94.dp)
+            .background(Brush.horizontalGradient(listOf(Color(0xFF141B2E), Color(0xFF070912))))
+            .padding(horizontal = 9.dp, vertical = 18.dp)
             .focusGroup(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterVertically)
@@ -234,14 +234,14 @@ private fun RailButton(item: TvRailItem, selected: Boolean, onClick: () -> Unit)
             .clip(RoundedCornerShape(14.dp))
             .background(bg)
             .clickable(interactionSource = interaction, indication = null, onClick = onClick)
-            .padding(vertical = 6.dp),
+            .padding(vertical = 10.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Icon(item.icon, contentDescription = item.label, tint = fg, modifier = Modifier.size(22.dp))
         Text(
             text = item.label,
             color = fg,
-            fontSize = 10.sp,
+            fontSize = 11.sp,
             fontWeight = FontWeight.SemiBold,
             maxLines = 1
         )
@@ -289,9 +289,19 @@ fun TvHeroBanner(
             .height(380.dp)
             .onFocusChanged { hasFocus = it.hasFocus }
             .onKeyEvent { ev ->
-                if (ev.type == KeyEventType.KeyDown && ev.key == Key.DirectionUp) {
-                    true // consume - banner is topmost row
-                } else false
+                if (ev.type != KeyEventType.KeyDown) return@onKeyEvent false
+                when (ev.key) {
+                    Key.DirectionUp -> true
+                    Key.DirectionLeft -> {
+                        if (items.size > 1) index = (safeIndex - 1 + items.size) % items.size
+                        true
+                    }
+                    Key.DirectionRight -> {
+                        if (items.size > 1) index = (safeIndex + 1) % items.size
+                        true
+                    }
+                    else -> false
+                }
             }
     ) {
         Crossfade(targetState = safeIndex, animationSpec = tween(600), label = "tvHeroFade") { i ->
