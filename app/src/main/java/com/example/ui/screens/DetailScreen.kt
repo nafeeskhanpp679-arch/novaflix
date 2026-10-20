@@ -312,7 +312,7 @@ fun DetailScreen(
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(260.dp)
+                                .height(330.dp)
                         ) {
                             AsyncImage(
                                 model = item.getFullBackdropUrl() ?: item.getFullPosterUrl(),
@@ -321,18 +321,35 @@ fun DetailScreen(
                                 contentScale = ContentScale.Crop
                             )
                             Box(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .background(
-                                        Brush.verticalGradient(
-                                            colorStops = arrayOf(
-                                                0.0f to Color.Transparent,
-                                                0.55f to Color.Transparent,
-                                                0.85f to DarkBackground.copy(alpha = 0.8f),
-                                                1.0f to DarkBackground
-                                            )
+                                modifier = Modifier.fillMaxSize().background(
+                                    Brush.verticalGradient(
+                                        colorStops = arrayOf(
+                                            0.0f to Color(0x22070912),
+                                            0.36f to Color(0x18070912),
+                                            0.62f to Color(0x99070912),
+                                            0.82f to Color(0xE6070912),
+                                            1.0f to DarkBackground
                                         )
                                     )
+                                )
+                            )
+                            Box(
+                                Modifier.align(Alignment.TopStart).padding(start = 16.dp, top = 16.dp)
+                                    .clip(RoundedCornerShape(10.dp))
+                                    .background(Color(0xB8070912))
+                                    .border(1.dp, Color(0x665B7CFA), RoundedCornerShape(10.dp))
+                                    .padding(horizontal = 11.dp, vertical = 7.dp)
+                            ) {
+                                Text(item.mediaType.name, color = Color.White, fontSize = 10.sp, fontWeight = FontWeight.ExtraBold, letterSpacing = 1.1.sp)
+                            }
+                            AsyncImage(
+                                model = item.getFullPosterUrl() ?: item.getFullBackdropUrl(),
+                                contentDescription = "${item.title} poster",
+                                modifier = Modifier.align(Alignment.BottomEnd).padding(end = 18.dp, bottom = 2.dp)
+                                    .width(104.dp).height(154.dp).clip(RoundedCornerShape(14.dp))
+                                    .border(1.dp, Color(0x885B7CFA), RoundedCornerShape(14.dp))
+                                    .shadow(16.dp, RoundedCornerShape(14.dp)),
+                                contentScale = ContentScale.Crop
                             )
                         }
                     }
@@ -361,10 +378,10 @@ fun DetailScreen(
 
                             Text(
                                 text = "★ $ratingStr ・ $yearStr$genreStr",
-                                fontSize = 15.sp,
-                                fontWeight = FontWeight(500),
-                                color = TextSecondaryColor,
-                                modifier = Modifier.padding(bottom = 20.dp)
+                                fontSize = 13.sp,
+                                fontWeight = FontWeight.SemiBold,
+                                color = Color(0xFFC4CDE2),
+                                modifier = Modifier.padding(bottom = 18.dp)
                             )
 
                             Button(
@@ -379,7 +396,8 @@ fun DetailScreen(
                                 shape = RoundedCornerShape(50.dp),
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .height(52.dp)
+                                    .height(54.dp)
+                                    .tvFocusRing(RoundedCornerShape(50.dp))
                                     .shadow(
                                         elevation = 15.dp,
                                         shape = RoundedCornerShape(50.dp),
