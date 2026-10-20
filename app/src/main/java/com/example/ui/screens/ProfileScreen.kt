@@ -48,7 +48,7 @@ import com.example.ui.components.UserAvatar
 import com.example.ui.components.pressScale
 import com.example.ui.viewmodel.ProfileViewModel
 
-private val Red = Color(0xFFE50914)
+private val Red = Color(0xFF5B7CFA)
 private val Bg = Color(0xFF0B0B0E)
 private val Card = Color(0xFF14141B)
 private val Line = Color(0x1AFFFFFF)
