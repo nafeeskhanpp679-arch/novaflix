@@ -188,7 +188,7 @@ fun TvSideRail(
         modifier = modifier
             .fillMaxHeight()
             .width(84.dp)
-            .background(Brush.horizontalGradient(listOf(Color(0xFF14141A), Color(0xFF0B0B0B))))
+            .background(Brush.horizontalGradient(listOf(Color(0xFF14141A), Color(0xFF070912))))
             .padding(horizontal = 8.dp, vertical = 14.dp)
             .focusGroup(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -198,7 +198,7 @@ fun TvSideRail(
             modifier = Modifier
                 .size(38.dp)
                 .clip(RoundedCornerShape(11.dp))
-                .background(Brush.linearGradient(listOf(Color(0xFFE50914), Color(0xFF8E0A12)))),
+                .background(Brush.linearGradient(listOf(Color(0xFF5B7CFA), Color(0xFF8E0A12)))),
             contentAlignment = Alignment.Center
         ) {
             Icon(Icons.Default.PlayArrow, contentDescription = "NovaFlix", tint = Color.White, modifier = Modifier.size(24.dp))
@@ -224,7 +224,7 @@ private fun RailButton(item: TvRailItem, selected: Boolean, onClick: () -> Unit)
         label = "railBg"
     )
     val fg = when {
-        focused -> Color(0xFF0B0B0B)
+        focused -> Color(0xFF070912)
         selected -> Color(0xFFFF4D5A)
         else -> Color(0xFF9A9AA8)
     }
@@ -252,8 +252,8 @@ private fun RailButton(item: TvRailItem, selected: Boolean, onClick: () -> Unit)
 // TV hero banner (Home / Series / Anime)
 // ---------------------------------------------------------------------------
 
-private val TvBg = Color(0xFF0B0B0B)
-private val TvRed = Color(0xFFE50914)
+private val TvBg = Color(0xFF070912)
+private val TvRed = Color(0xFF5B7CFA)
 
 @Composable
 fun TvHeroBanner(
@@ -445,7 +445,7 @@ fun TvActionButton(
         animationSpec = tween(130),
         label = "tvBtnBg"
     )
-    val fg = if (focused) Color(0xFF0B0B0B) else Color.White
+    val fg = if (focused) Color(0xFF070912) else Color.White
     val borderColor = if (!primary && !focused) Color(0x66FFFFFF) else Color.Transparent
     Row(
         modifier = modifier
@@ -489,7 +489,7 @@ fun TvIconAction(
         Icon(
             icon,
             contentDescription = description,
-            tint = if (focused) Color(0xFF0B0B0B) else Color.White,
+            tint = if (focused) Color(0xFF070912) else Color.White,
             modifier = Modifier.size(size * 0.55f)
         )
     }
