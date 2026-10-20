@@ -224,7 +224,7 @@ fun UserAvatar(
         modifier = modifier
             .size(size)
             .clip(CircleShape)
-            .background(Brush.linearGradient(listOf(Color(0xFF5B7CFA), Color(0xFF8E0A12))))
+            .background(Brush.linearGradient(listOf(Color(0xFF5B7CFA), Color(0xFF8B5CF6))))
             .border(1.dp, Color(0x33FFFFFF), CircleShape),
         contentAlignment = Alignment.Center
     ) {
