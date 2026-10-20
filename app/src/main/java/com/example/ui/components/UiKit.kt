@@ -224,7 +224,7 @@ fun UserAvatar(
         modifier = modifier
             .size(size)
             .clip(CircleShape)
-            .background(Brush.linearGradient(listOf(Color(0xFFE50914), Color(0xFF8E0A12))))
+            .background(Brush.linearGradient(listOf(Color(0xFF5B7CFA), Color(0xFF8E0A12))))
             .border(1.dp, Color(0x33FFFFFF), CircleShape),
         contentAlignment = Alignment.Center
     ) {
@@ -269,7 +269,7 @@ fun AppBottomBar(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Brush.verticalGradient(listOf(Color.Transparent, Color(0xFF0B0B0B))))
+            .background(Brush.verticalGradient(listOf(Color.Transparent, Color(0xFF070912))))
             .navigationBarsPadding()
             .padding(horizontal = 14.dp, vertical = 8.dp)
     ) {
@@ -295,7 +295,7 @@ fun AppBottomBar(
 @Composable
 private fun BarItem(icon: ImageVector, label: String, selected: Boolean, onClick: () -> Unit) {
     val bg by animateColorAsState(
-        if (selected) Color(0xFFE50914) else Color.Transparent,
+        if (selected) Color(0xFF5B7CFA) else Color.Transparent,
         animationSpec = tween(220),
         label = "barBg"
     )
