@@ -117,8 +117,8 @@ import java.util.Locale
 // Palette
 // ---------------------------------------------------------------------------
 private val Accent = Color(0xFFE50914)
-private val PanelBg = Color(0xF211131C)
-private val PillBg = Color(0x33FFFFFF)
+private val PanelBg = Color(0xF20B0D14)
+private val PillBg = Color(0x1FFFFFFF)
 private val TextDim = Color(0xFFB3B3B3)
 
 // ---------------------------------------------------------------------------
@@ -1608,6 +1608,15 @@ fun PlayerScreen(
                         }
                     }
                     PlayerPanel.Settings -> {
+                        item { PanelHeader("Quick controls") }
+                        item { PanelRow(label = "Video quality", selected = false, onClick = { panel = PlayerPanel.Quality }) }
+                        item { PanelRow(label = "Audio language", selected = false, onClick = { panel = PlayerPanel.Audio }) }
+                        item { PanelRow(label = "Subtitles & captions", selected = false, onClick = { panel = PlayerPanel.Subtitles }) }
+                        item { PanelRow(label = "Playback speed", selected = false, onClick = { panel = PlayerPanel.Speed }) }
+                        if (uiState.mediaType != MediaType.MOVIE) {
+                            item { PanelRow(label = "Episodes & seasons", selected = false, onClick = { panel = PlayerPanel.Episodes }) }
+                        }
+                        item { PanelHeader("Playback preferences") }
                         item {
                             SettingToggleRow(
                                 title = "Auto-play next episode",
