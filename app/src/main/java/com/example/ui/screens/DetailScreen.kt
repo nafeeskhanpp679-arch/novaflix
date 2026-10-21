@@ -56,12 +56,12 @@ import com.example.ui.theme.*
 import com.example.ui.viewmodel.DetailViewModel
 
 // Exact CSS-equivalent colors from HTML template
-private val HaiFlixRed = Color(0xFF5B7CFA)
+private val HaiFlixRed = Color(0xFFE50914)
 private val HaiFlixRedGlow = Color(0x80E50914)
-private val DarkBackground = Color(0xFF070912)
-private val CardBackground = Color(0xFF0E1220)
+private val DarkBackground = Color(0xFF07080D)
+private val CardBackground = Color(0xFF11131C)
 private val BorderColor = Color(0x1AFFFFFF)
-private val TextSecondaryColor = Color(0xFFA0A0A0)
+private val TextSecondaryColor = Color(0xFFB7BAC7)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -701,7 +701,7 @@ private fun ActionIconBtn(
     ) {
         Box(
             Modifier.size(38.dp).clip(CircleShape)
-                .background(if (isActive) Brush.linearGradient(listOf(Color(0xFF5B7CFA), Color(0xFF8B5CF6))) else Brush.linearGradient(listOf(Color(0xFF252D42), Color(0xFF151B2B)))),
+                .background(if (isActive) Brush.linearGradient(listOf(Color(0xFFE50914), Color(0xFF8B5CF6))) else Brush.linearGradient(listOf(Color(0xFF252D42), Color(0xFF151B2B)))),
             contentAlignment = Alignment.Center
         ) {
             Icon(
