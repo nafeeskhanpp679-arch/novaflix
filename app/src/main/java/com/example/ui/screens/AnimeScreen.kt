@@ -703,7 +703,8 @@ private fun AnimeCard(
         modifier = Modifier.pressScale(onClick)
             .width(posterWidth)
             .height(posterHeight)
-            .clip(RoundedCornerShape(14.dp))
+            .shadow(12.dp, RoundedCornerShape(18.dp))
+            .clip(RoundedCornerShape(18.dp))
             .background(CardBackground)
             .border(1.dp, BorderColor, RoundedCornerShape(14.dp))
     ) {
