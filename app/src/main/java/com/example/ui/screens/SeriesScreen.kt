@@ -60,14 +60,14 @@ import com.example.data.model.MediaType
 import com.example.ui.viewmodel.SeriesViewModel
 import kotlinx.coroutines.delay
 
-private val NovaFlixRed = Color(0xFF5B7CFA)
+private val NovaFlixRed = Color(0xFFE50914)
 private val NovaFlixRedGlow = Color(0x80E50914)
 private val HaiFlixRed = NovaFlixRed
 private val HaiFlixRedGlow = NovaFlixRedGlow
-private val DarkBackground = Color(0xFF070912)
-private val CardBackground = Color(0xFF0E1220)
+private val DarkBackground = Color(0xFF07080D)
+private val CardBackground = Color(0xFF11131C)
 private val BorderColor = Color(0x1AFFFFFF)
-private val TextSecondaryColor = Color(0xFFA0A0A0)
+private val TextSecondaryColor = Color(0xFFB7BAC7)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
