@@ -1514,23 +1514,35 @@ fun PlayerScreen(
                                     }
                                 )
                             }
-                        } else {
-                            item { PanelHeader("Adaptive Quality Limits") }
-                            val presetOptions = listOf(
-                                "Auto" to "⚡ Auto (Adaptive Speed)",
-                                "1080p" to "🎬 1080p Full HD",
-                                "720p" to "📺 720p HD",
-                                "480p" to "📱 480p SD (Data Saver)",
-                                "360p" to "📶 360p Low"
-                            )
-                            items(presetOptions) { (key, label) ->
+                        } else if (sources.isNotEmpty()) {
+                            item { PanelHeader("Available stream servers") }
+                            items(sources) { source ->
                                 PanelRow(
-                                    label = label,
-                                    selected = true,
+                                    label = sourceLabel(source),
+                                    selected = source.url == activeSource?.url,
                                     onClick = {
+                                        viewModel.selectSource(source)
                                         panel = PlayerPanel.None
-                                        hud = Icons.Default.HighQuality to "Auto quality active"
+                                        hud = Icons.Default.HighQuality to "Switching to ${sourceLabel(source)}"
                                     }
+                                )
+                            }
+                            item {
+                                Text(
+                                    "Resolution choices depend on the selected stream. If the source exposes multiple video tracks, they appear above.",
+                                    color = TextDim,
+                                    fontSize = 12.sp,
+                                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
+                                )
+                            }
+                        } else {
+                            item { PanelHeader("Quality unavailable") }
+                            item {
+                                Text(
+                                    "This stream does not expose separate quality tracks or alternate servers.",
+                                    color = TextDim,
+                                    fontSize = 12.sp,
+                                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
                                 )
                             }
                         }
