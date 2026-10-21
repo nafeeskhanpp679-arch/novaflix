@@ -103,7 +103,7 @@ fun SeriesScreen(
                                 modifier = Modifier
                                     .size(32.dp)
                                     .clip(RoundedCornerShape(8.dp))
-                                    .background(Brush.linearGradient(listOf(NovaFlixRed, Color(0xFF8B5CF6)))),
+                                    .background(Brush.linearGradient(listOf(NovaFlixRed, Color(0xFFB21F35)))),
                                 contentAlignment = Alignment.Center
                             ) {
                                 Icon(
@@ -790,7 +790,8 @@ private fun SeriesCard(
         modifier = Modifier.pressScale(onClick)
             .width(cardWidth)
             .height(cardHeight)
-            .clip(RoundedCornerShape(14.dp))
+            .shadow(12.dp, RoundedCornerShape(18.dp))
+            .clip(RoundedCornerShape(18.dp))
             .background(CardBackground)
             .border(1.dp, BorderColor, RoundedCornerShape(14.dp))
     ) {
