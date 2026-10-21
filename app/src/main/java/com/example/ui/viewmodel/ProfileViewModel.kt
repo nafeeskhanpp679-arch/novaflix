@@ -82,7 +82,8 @@ class ProfileViewModel(
                 is AuthManager.SignInResult.Success ->
                     message.value = "Welcome${r.name?.let { ", $it" } ?: ""}! Your My List and watch history will now sync with the cloud."
                 is AuthManager.SignInResult.Error -> message.value = r.message
-                AuthManager.SignInResult.Cancelled -> {}
+                AuthManager.SignInResult.Cancelled ->
+                    message.value = "Google sign-in was cancelled. Tap Continue with Google and try again."
             }
             busy.value = false
         }
