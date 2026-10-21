@@ -116,8 +116,8 @@ import java.util.Locale
 // ---------------------------------------------------------------------------
 // Palette
 // ---------------------------------------------------------------------------
-private val Accent = Color(0xFF5B7CFA)
-private val PanelBg = Color(0xF2101010)
+private val Accent = Color(0xFFE50914)
+private val PanelBg = Color(0xF211131C)
 private val PillBg = Color(0x33FFFFFF)
 private val TextDim = Color(0xFFB3B3B3)
 
