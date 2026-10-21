@@ -1625,6 +1625,23 @@ fun PlayerScreen(
                         item { PanelRow(label = "Audio language", selected = false, onClick = { panel = PlayerPanel.Audio }) }
                         item { PanelRow(label = "Subtitles & captions", selected = false, onClick = { panel = PlayerPanel.Subtitles }) }
                         item { PanelRow(label = "Playback speed", selected = false, onClick = { panel = PlayerPanel.Speed }) }
+                        item {
+                            PanelRow(
+                                label = "Screen fit: $resizeLabel",
+                                selected = false,
+                                onClick = {
+                                    viewModel.cycleResizeMode()
+                                    hud = Icons.Default.AspectRatio to "Screen fit changed"
+                                }
+                            )
+                        }
+                        item {
+                            PanelRow(
+                                label = "Picture-in-picture",
+                                selected = false,
+                                onClick = { panel = PlayerPanel.None; enterPip() }
+                            )
+                        }
                         if (uiState.mediaType != MediaType.MOVIE) {
                             item { PanelRow(label = "Episodes & seasons", selected = false, onClick = { panel = PlayerPanel.Episodes }) }
                         }
