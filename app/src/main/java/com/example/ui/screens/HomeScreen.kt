@@ -147,7 +147,7 @@ fun HomeScreen(
                                 modifier = Modifier
                                     .size(32.dp)
                                     .clip(RoundedCornerShape(8.dp))
-                                    .background(Brush.linearGradient(listOf(NovaFlixRed, Color(0xFF8B5CF6)))),
+                                    .background(Brush.linearGradient(listOf(NovaFlixRed, Color(0xFFB21F35)))),
                                 contentAlignment = Alignment.Center
                             ) {
                                 Icon(
@@ -378,7 +378,7 @@ fun HomeScreen(
                                         .clip(RoundedCornerShape(20.dp))
                                         .background(
                                             if (isSelected) {
-                                                Brush.horizontalGradient(listOf(Color(0xFFE50914), Color(0xFF8B5CF6)))
+                                                Brush.horizontalGradient(listOf(Color(0xFFE50914), Color(0xFFB21F35)))
                                             } else {
                                                 SolidColor(CardBackground)
                                             }
@@ -598,10 +598,10 @@ private fun HeroBannerSection(
                 Box(
                     Modifier.fillMaxSize().background(
                         Brush.verticalGradient(
-                            0f to Color(0x12070912),
-                            0.28f to Color(0x10070912),
-                            0.53f to Color(0x8C070912),
-                            0.74f to Color(0xF5070912),
+                            0f to Color(0x1207080D),
+                            0.28f to Color(0x1007080D),
+                            0.53f to Color(0x8C07080D),
+                            0.74f to Color(0xF507080D),
                             1f to DarkBackground
                         )
                     )
@@ -615,7 +615,7 @@ private fun HeroBannerSection(
                     modifier = Modifier.align(Alignment.BottomStart).fillMaxWidth().padding(start = 20.dp, end = 20.dp, bottom = 24.dp)
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        Box(Modifier.clip(RoundedCornerShape(7.dp)).background(Brush.horizontalGradient(listOf(Color(0xFFE50914), Color(0xFF8B5CF6)))).padding(horizontal = 10.dp, vertical = 6.dp)) {
+                        Box(Modifier.clip(RoundedCornerShape(7.dp)).background(Brush.horizontalGradient(listOf(Color(0xFFE50914), Color(0xFFB21F35)))).padding(horizontal = 10.dp, vertical = 6.dp)) {
                             Text("FEATURED", color = Color.White, fontSize = 10.sp, fontWeight = FontWeight.ExtraBold, letterSpacing = 1.4.sp)
                         }
                         Text(media.mediaType.name, color = Color.White.copy(alpha = .9f), fontSize = 11.sp, fontWeight = FontWeight.Bold)
@@ -660,7 +660,7 @@ private fun HeroBannerSection(
                 }
                 if (featuredItems.size > 1) {
                     Row(
-                        Modifier.align(Alignment.TopEnd).padding(16.dp).clip(CircleShape).background(Color(0x99070912)).padding(horizontal = 10.dp, vertical = 7.dp),
+                        Modifier.align(Alignment.TopEnd).padding(16.dp).clip(CircleShape).background(Color(0x9907080D)).padding(horizontal = 10.dp, vertical = 7.dp),
                         horizontalArrangement = Arrangement.spacedBy(5.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -706,7 +706,7 @@ private fun SectionHeader(title: String, icon: androidx.compose.ui.graphics.vect
         Box(
             Modifier.size(34.dp).clip(RoundedCornerShape(11.dp))
                 .background(Brush.linearGradient(listOf(Color(0xFF25315A), Color(0xFF251B45))))
-                .border(1.dp, Color(0x445B7CFA), RoundedCornerShape(11.dp)),
+                .border(1.dp, Color(0x44E50914), RoundedCornerShape(11.dp)),
             contentAlignment = Alignment.Center
         ) {
             Icon(icon, contentDescription = null, tint = Color(0xFF9CAEFF), modifier = Modifier.size(18.dp))
@@ -714,7 +714,7 @@ private fun SectionHeader(title: String, icon: androidx.compose.ui.graphics.vect
         Spacer(Modifier.width(10.dp))
         Text(title, fontSize = 18.sp, fontWeight = FontWeight.ExtraBold, color = Color.White, maxLines = 1, overflow = TextOverflow.Ellipsis)
         Spacer(Modifier.weight(1f))
-        Box(Modifier.width(24.dp).height(3.dp).clip(CircleShape).background(Brush.horizontalGradient(listOf(Color(0xFFE50914), Color(0x008B5CF6)))))
+        Box(Modifier.width(24.dp).height(3.dp).clip(CircleShape).background(Brush.horizontalGradient(listOf(Color(0xFFE50914), Color(0x00B21F35)))))
     }
 }
 
@@ -748,9 +748,10 @@ private fun MediaCard(
             .pressScale(onClick)
             .width(cardWidth)
             .aspectRatio(2f / 3f)
+            .shadow(12.dp, shape)
             .clip(shape)
-            .background(Color(0xFF101525))
-            .border(1.dp, Color(0x403D4C75), shape)
+            .background(Color(0xFF121521))
+            .border(1.dp, Color(0x40303342), shape)
             .testTag("media_card_${item.id}")
     ) {
         AsyncImage(
@@ -765,17 +766,17 @@ private fun MediaCard(
         Box(
             Modifier.fillMaxSize().background(
                 Brush.verticalGradient(
-                    0f to Color(0x18070912),
+                    0f to Color(0x1807080D),
                     0.45f to Color.Transparent,
-                    0.68f to Color(0x8F070912),
-                    1f to Color(0xF5070912)
+                    0.68f to Color(0x8F07080D),
+                    1f to Color(0xF507080D)
                 )
             )
         )
         if (item.rating > 0.0) {
             Row(
                 Modifier.align(Alignment.TopEnd).padding(8.dp)
-                    .clip(RoundedCornerShape(8.dp)).background(Color(0xD9070912))
+                    .clip(RoundedCornerShape(8.dp)).background(Color(0xD907080D))
                     .border(1.dp, Color(0x55FFC857), RoundedCornerShape(8.dp))
                     .padding(horizontal = 7.dp, vertical = 5.dp),
                 verticalAlignment = Alignment.CenterVertically
@@ -788,7 +789,7 @@ private fun MediaCard(
         Column(Modifier.align(Alignment.BottomStart).fillMaxWidth().padding(10.dp)) {
             Box(
                 Modifier.clip(RoundedCornerShape(6.dp))
-                    .background(Brush.horizontalGradient(listOf(Color(0xEE5B7CFA), Color(0xEE8B5CF6))))
+                    .background(Brush.horizontalGradient(listOf(Color(0xEEE50914), Color(0xEEB21F35))))
                     .padding(horizontal = 7.dp, vertical = 4.dp)
             ) {
                 Text(item.mediaType.name, color = Color.White, fontSize = 9.sp, fontWeight = FontWeight.ExtraBold, letterSpacing = .6.sp)
@@ -1230,7 +1231,7 @@ private fun SearchGridMediaCard(
                 val (badgeBg, badgeText) = when (item.mediaType) {
                     MediaType.MOVIE -> HaiFlixRed to "MOVIE"
                     MediaType.TV -> Color(0xFF3B82F6) to "SERIES"
-                    MediaType.ANIME -> Color(0xFF8B5CF6) to "ANIME"
+                    MediaType.ANIME -> Color(0xFFB21F35) to "ANIME"
                 }
                 Surface(
                     color = badgeBg,
