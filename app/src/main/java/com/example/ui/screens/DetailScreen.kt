@@ -324,10 +324,10 @@ fun DetailScreen(
                                 modifier = Modifier.fillMaxSize().background(
                                     Brush.verticalGradient(
                                         colorStops = arrayOf(
-                                            0.0f to Color(0x22070912),
-                                            0.36f to Color(0x18070912),
-                                            0.62f to Color(0x99070912),
-                                            0.82f to Color(0xE6070912),
+                                            0.0f to Color(0x2207080D),
+                                            0.36f to Color(0x1807080D),
+                                            0.62f to Color(0x9907080D),
+                                            0.82f to Color(0xE607080D),
                                             1.0f to DarkBackground
                                         )
                                     )
@@ -336,8 +336,8 @@ fun DetailScreen(
                             Box(
                                 Modifier.align(Alignment.TopStart).padding(start = 16.dp, top = 16.dp)
                                     .clip(RoundedCornerShape(10.dp))
-                                    .background(Color(0xB8070912))
-                                    .border(1.dp, Color(0x665B7CFA), RoundedCornerShape(10.dp))
+                                    .background(Color(0xB807080D))
+                                    .border(1.dp, Color(0x66E50914), RoundedCornerShape(10.dp))
                                     .padding(horizontal = 11.dp, vertical = 7.dp)
                             ) {
                                 Text(item.mediaType.name, color = Color.White, fontSize = 10.sp, fontWeight = FontWeight.ExtraBold, letterSpacing = 1.1.sp)
@@ -347,7 +347,7 @@ fun DetailScreen(
                                 contentDescription = "${item.title} poster",
                                 modifier = Modifier.align(Alignment.BottomEnd).padding(end = 18.dp, bottom = 2.dp)
                                     .width(104.dp).height(154.dp).clip(RoundedCornerShape(14.dp))
-                                    .border(1.dp, Color(0x885B7CFA), RoundedCornerShape(14.dp))
+                                    .border(1.dp, Color(0x88E50914), RoundedCornerShape(14.dp))
                                     .shadow(16.dp, RoundedCornerShape(14.dp)),
                                 contentScale = ContentScale.Crop
                             )
@@ -690,7 +690,7 @@ private fun ActionIconBtn(
             .width(78.dp)
             .clip(shape)
             .background(if (isActive) Color(0x332D4D9B) else Color(0x181A2236))
-            .border(1.dp, if (isActive) Color(0x775B7CFA) else Color(0x22FFFFFF), shape)
+            .border(1.dp, if (isActive) Color(0x77E50914) else Color(0x22FFFFFF), shape)
             .tvFocusRing(shape)
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
@@ -701,7 +701,7 @@ private fun ActionIconBtn(
     ) {
         Box(
             Modifier.size(38.dp).clip(CircleShape)
-                .background(if (isActive) Brush.linearGradient(listOf(Color(0xFFE50914), Color(0xFF8B5CF6))) else Brush.linearGradient(listOf(Color(0xFF252D42), Color(0xFF151B2B)))),
+                .background(if (isActive) Brush.linearGradient(listOf(Color(0xFFE50914), Color(0xFFB21F35))) else Brush.linearGradient(listOf(Color(0xFF252D42), Color(0xFF151B2B)))),
             contentAlignment = Alignment.Center
         ) {
             Icon(
