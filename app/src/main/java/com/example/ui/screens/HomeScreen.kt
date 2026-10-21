@@ -86,14 +86,14 @@ import com.example.ui.theme.*
 import com.example.ui.viewmodel.HomeViewModel
 import kotlinx.coroutines.delay
 
-private val NovaFlixRed = Color(0xFF5B7CFA)
-private val NovaFlixRedGlow = Color(0x805B7CFA)
+private val NovaFlixRed = Color(0xFFE50914)
+private val NovaFlixRedGlow = Color(0x80E50914)
 private val HaiFlixRed = NovaFlixRed
 private val HaiFlixRedGlow = NovaFlixRedGlow
-private val DarkBackground = Color(0xFF070912)
-private val CardBackground = Color(0xFF0E1220)
+private val DarkBackground = Color(0xFF07080D)
+private val CardBackground = Color(0xFF11131C)
 private val BorderColor = Color(0x1AFFFFFF)
-private val TextSecondaryColor = Color(0xFFA0A0A0)
+private val TextSecondaryColor = Color(0xFFB7BAC7)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -179,7 +179,7 @@ fun HomeScreen(
                             border = BorderStroke(
                                 1.dp,
                                 when (currentServerType) {
-                                    ServerConfig.ServerType.MERA_SERVER -> Color(0xFF5B7CFA).copy(alpha = 0.6f)
+                                    ServerConfig.ServerType.MERA_SERVER -> Color(0xFFE50914).copy(alpha = 0.6f)
                                     ServerConfig.ServerType.MOVIEBOX -> Color(0xFF4CAF50).copy(alpha = 0.6f)
                                     ServerConfig.ServerType.CUSTOM -> Color(0xFF2196F3).copy(alpha = 0.6f)
                                 }
@@ -197,7 +197,7 @@ fun HomeScreen(
                                         .clip(CircleShape)
                                         .background(
                                             when (currentServerType) {
-                                                ServerConfig.ServerType.MERA_SERVER -> Color(0xFF5B7CFA)
+                                                ServerConfig.ServerType.MERA_SERVER -> Color(0xFFE50914)
                                                 ServerConfig.ServerType.MOVIEBOX -> Color(0xFF4CAF50)
                                                 ServerConfig.ServerType.CUSTOM -> Color(0xFF2196F3)
                                             }
@@ -378,7 +378,7 @@ fun HomeScreen(
                                         .clip(RoundedCornerShape(20.dp))
                                         .background(
                                             if (isSelected) {
-                                                Brush.horizontalGradient(listOf(Color(0xFF5B7CFA), Color(0xFF8B5CF6)))
+                                                Brush.horizontalGradient(listOf(Color(0xFFE50914), Color(0xFF8B5CF6)))
                                             } else {
                                                 SolidColor(CardBackground)
                                             }
@@ -585,7 +585,7 @@ private fun HeroBannerSection(
                     .height(500.dp)
                     .clip(RoundedCornerShape(26.dp))
                     .background(CardBackground)
-                    .border(1.dp, Color(0x365B7CFA), RoundedCornerShape(26.dp))
+                    .border(1.dp, Color(0x36E50914), RoundedCornerShape(26.dp))
                     .tvFocusRing(RoundedCornerShape(26.dp))
                     .clickable { onDetailClick(media) }
             ) {
@@ -615,7 +615,7 @@ private fun HeroBannerSection(
                     modifier = Modifier.align(Alignment.BottomStart).fillMaxWidth().padding(start = 20.dp, end = 20.dp, bottom = 24.dp)
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        Box(Modifier.clip(RoundedCornerShape(7.dp)).background(Brush.horizontalGradient(listOf(Color(0xFF5B7CFA), Color(0xFF8B5CF6)))).padding(horizontal = 10.dp, vertical = 6.dp)) {
+                        Box(Modifier.clip(RoundedCornerShape(7.dp)).background(Brush.horizontalGradient(listOf(Color(0xFFE50914), Color(0xFF8B5CF6)))).padding(horizontal = 10.dp, vertical = 6.dp)) {
                             Text("FEATURED", color = Color.White, fontSize = 10.sp, fontWeight = FontWeight.ExtraBold, letterSpacing = 1.4.sp)
                         }
                         Text(media.mediaType.name, color = Color.White.copy(alpha = .9f), fontSize = 11.sp, fontWeight = FontWeight.Bold)
@@ -714,7 +714,7 @@ private fun SectionHeader(title: String, icon: androidx.compose.ui.graphics.vect
         Spacer(Modifier.width(10.dp))
         Text(title, fontSize = 18.sp, fontWeight = FontWeight.ExtraBold, color = Color.White, maxLines = 1, overflow = TextOverflow.Ellipsis)
         Spacer(Modifier.weight(1f))
-        Box(Modifier.width(24.dp).height(3.dp).clip(CircleShape).background(Brush.horizontalGradient(listOf(Color(0xFF5B7CFA), Color(0x008B5CF6)))))
+        Box(Modifier.width(24.dp).height(3.dp).clip(CircleShape).background(Brush.horizontalGradient(listOf(Color(0xFFE50914), Color(0x008B5CF6)))))
     }
 }
 
