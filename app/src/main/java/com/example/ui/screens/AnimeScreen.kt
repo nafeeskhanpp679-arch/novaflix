@@ -502,13 +502,16 @@ private fun AnimeHeroBanner(
             state = pagerState,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(380.dp)
+                .height(400.dp)
+                .padding(horizontal = 12.dp)
         ) { page ->
             val media = items[page]
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .tvFocusRing(RoundedCornerShape(10.dp)).clickable { onDetailClick(media) }
+                    .clip(RoundedCornerShape(24.dp))
+                    .border(1.dp, BorderColor, RoundedCornerShape(24.dp))
+                    .tvFocusRing(RoundedCornerShape(24.dp)).clickable { onDetailClick(media) }
             ) {
                 AsyncImage(
                     model = media.getFullBackdropUrl() ?: media.getFullPosterUrl(),
@@ -535,7 +538,7 @@ private fun AnimeHeroBanner(
                 Column(
                     modifier = Modifier
                         .align(Alignment.BottomStart)
-                        .padding(16.dp)
+                        .padding(20.dp)
                 ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -697,16 +700,16 @@ private fun AnimeCard(
     onClick: () -> Unit
 ) {
     val isTv = LocalIsTv.current
-    val posterWidth = if (isTv) 170.dp else 138.dp
-    val posterHeight = if (isTv) 250.dp else 205.dp
+    val posterWidth = if (isTv) 180.dp else 146.dp
+    val posterHeight = if (isTv) 270.dp else 236.dp
     Box(
         modifier = Modifier.pressScale(onClick)
             .width(posterWidth)
             .height(posterHeight)
-            .shadow(12.dp, RoundedCornerShape(18.dp))
-            .clip(RoundedCornerShape(18.dp))
+            .shadow(12.dp, RoundedCornerShape(20.dp))
+            .clip(RoundedCornerShape(20.dp))
             .background(CardBackground)
-            .border(1.dp, BorderColor, RoundedCornerShape(14.dp))
+            .border(1.dp, BorderColor, RoundedCornerShape(20.dp))
     ) {
         AsyncImage(
             model = media.getFullPosterUrl() ?: media.getFullBackdropUrl(),
@@ -726,6 +729,14 @@ private fun AnimeCard(
                 )
             )
         )
+        Box(
+            modifier = Modifier.align(Alignment.TopStart).padding(8.dp)
+                .clip(RoundedCornerShape(7.dp))
+                .background(HaiFlixRed.copy(alpha = 0.96f))
+                .padding(horizontal = 7.dp, vertical = 4.dp)
+        ) {
+            Text("ANIME", color = Color.White, fontSize = 9.sp, fontWeight = FontWeight.ExtraBold, letterSpacing = 0.7.sp)
+        }
         if (media.rating > 0) {
             Row(
                 modifier = Modifier.align(Alignment.TopEnd).padding(7.dp)
