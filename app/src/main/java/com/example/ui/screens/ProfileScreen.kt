@@ -46,11 +46,11 @@ import com.example.ui.components.UserAvatar
 import com.example.ui.components.pressScale
 import com.example.ui.viewmodel.ProfileViewModel
 
-private val Red = Color(0xFF5B7CFA)
-private val Bg = Color(0xFF0B0B0E)
-private val Card = Color(0xFF14141B)
+private val Red = Color(0xFFE50914)
+private val Bg = Color(0xFF07080D)
+private val Card = Color(0xFF11131C)
 private val Line = Color(0x1AFFFFFF)
-private val Dim = Color(0xFF9A9AA8)
+private val Dim = Color(0xFFB7BAC7)
 
 private fun Context.findActivity(): Activity? {
     var c: Context? = this
@@ -112,8 +112,8 @@ fun ProfileScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(24.dp))
-                    .background(Brush.linearGradient(listOf(Color(0xFF202D59), Color(0xFF17172F), Color(0xFF0D1220))))
-                    .border(1.dp, Color(0x665B7CFA), RoundedCornerShape(24.dp))
+                    .background(Brush.linearGradient(listOf(Color(0xFF351018), Color(0xFF17131C), Color(0xFF0D1018))))
+                    .border(1.dp, Color(0x66E50914), RoundedCornerShape(24.dp))
                     .padding(22.dp)
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {

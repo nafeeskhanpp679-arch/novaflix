@@ -113,7 +113,8 @@ class AuthManager(context: Context) {
             SignInResult.Error("Google sign-in failed: ${e.message ?: e.type}" + setupHint())
         } catch (e: Exception) {
             Log.w("AuthManager", "signIn error: ${e.message}", e)
-            SignInResult.Error(e.localizedMessage ?: "Sign-in failed")
+            val reason = e.localizedMessage ?: "Sign-in failed"
+            SignInResult.Error("$reason${setupHint()}")
         }
     }
 

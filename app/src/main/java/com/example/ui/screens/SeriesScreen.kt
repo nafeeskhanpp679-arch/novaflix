@@ -60,14 +60,14 @@ import com.example.data.model.MediaType
 import com.example.ui.viewmodel.SeriesViewModel
 import kotlinx.coroutines.delay
 
-private val NovaFlixRed = Color(0xFF5B7CFA)
+private val NovaFlixRed = Color(0xFFE50914)
 private val NovaFlixRedGlow = Color(0x80E50914)
 private val HaiFlixRed = NovaFlixRed
 private val HaiFlixRedGlow = NovaFlixRedGlow
-private val DarkBackground = Color(0xFF070912)
-private val CardBackground = Color(0xFF0E1220)
+private val DarkBackground = Color(0xFF07080D)
+private val CardBackground = Color(0xFF11131C)
 private val BorderColor = Color(0x1AFFFFFF)
-private val TextSecondaryColor = Color(0xFFA0A0A0)
+private val TextSecondaryColor = Color(0xFFB7BAC7)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -103,7 +103,7 @@ fun SeriesScreen(
                                 modifier = Modifier
                                     .size(32.dp)
                                     .clip(RoundedCornerShape(8.dp))
-                                    .background(Brush.linearGradient(listOf(NovaFlixRed, Color(0xFF8B5CF6)))),
+                                    .background(Brush.linearGradient(listOf(NovaFlixRed, Color(0xFFB21F35)))),
                                 contentAlignment = Alignment.Center
                             ) {
                                 Icon(
@@ -489,13 +489,16 @@ private fun SeriesHeroBanner(
             state = pagerState,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(380.dp)
+                .height(400.dp)
+                .padding(horizontal = 12.dp)
         ) { page ->
             val media = items[page]
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .tvFocusRing(RoundedCornerShape(10.dp)).clickable { onDetailClick(media) }
+                    .clip(RoundedCornerShape(24.dp))
+                    .border(1.dp, BorderColor, RoundedCornerShape(24.dp))
+                    .tvFocusRing(RoundedCornerShape(24.dp)).clickable { onDetailClick(media) }
             ) {
                 AsyncImage(
                     model = media.getFullBackdropUrl() ?: media.getFullPosterUrl(),
@@ -522,7 +525,7 @@ private fun SeriesHeroBanner(
                 Column(
                     modifier = Modifier
                         .align(Alignment.BottomStart)
-                        .padding(16.dp)
+                        .padding(20.dp)
                 ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -784,15 +787,16 @@ private fun SeriesCard(
     onClick: () -> Unit
 ) {
     val isTv = LocalIsTv.current
-    val cardWidth = if (isTv) 170.dp else 138.dp
-    val cardHeight = if (isTv) 250.dp else 205.dp
+    val cardWidth = if (isTv) 180.dp else 146.dp
+    val cardHeight = if (isTv) 270.dp else 236.dp
     Box(
         modifier = Modifier.pressScale(onClick)
             .width(cardWidth)
             .height(cardHeight)
-            .clip(RoundedCornerShape(14.dp))
+            .shadow(12.dp, RoundedCornerShape(20.dp))
+            .clip(RoundedCornerShape(20.dp))
             .background(CardBackground)
-            .border(1.dp, BorderColor, RoundedCornerShape(14.dp))
+            .border(1.dp, BorderColor, RoundedCornerShape(20.dp))
     ) {
         AsyncImage(
             model = media.getFullPosterUrl() ?: media.getFullBackdropUrl(),
@@ -812,6 +816,14 @@ private fun SeriesCard(
                 )
             )
         )
+        Box(
+            modifier = Modifier.align(Alignment.TopStart).padding(8.dp)
+                .clip(RoundedCornerShape(7.dp))
+                .background(HaiFlixRed.copy(alpha = 0.96f))
+                .padding(horizontal = 7.dp, vertical = 4.dp)
+        ) {
+            Text("SERIES", color = Color.White, fontSize = 9.sp, fontWeight = FontWeight.ExtraBold, letterSpacing = 0.7.sp)
+        }
         if (media.rating > 0) {
             Row(
                 modifier = Modifier.align(Alignment.TopEnd).padding(7.dp)

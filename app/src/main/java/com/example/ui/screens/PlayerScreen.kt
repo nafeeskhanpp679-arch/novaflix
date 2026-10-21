@@ -116,9 +116,9 @@ import java.util.Locale
 // ---------------------------------------------------------------------------
 // Palette
 // ---------------------------------------------------------------------------
-private val Accent = Color(0xFF5B7CFA)
-private val PanelBg = Color(0xF2101010)
-private val PillBg = Color(0x33FFFFFF)
+private val Accent = Color(0xFFE50914)
+private val PanelBg = Color(0xF20B0D14)
+private val PillBg = Color(0x1FFFFFFF)
 private val TextDim = Color(0xFFB3B3B3)
 
 // ---------------------------------------------------------------------------
@@ -1514,23 +1514,35 @@ fun PlayerScreen(
                                     }
                                 )
                             }
-                        } else {
-                            item { PanelHeader("Adaptive Quality Limits") }
-                            val presetOptions = listOf(
-                                "Auto" to "⚡ Auto (Adaptive Speed)",
-                                "1080p" to "🎬 1080p Full HD",
-                                "720p" to "📺 720p HD",
-                                "480p" to "📱 480p SD (Data Saver)",
-                                "360p" to "📶 360p Low"
-                            )
-                            items(presetOptions) { (key, label) ->
+                        } else if (sources.isNotEmpty()) {
+                            item { PanelHeader("Available stream servers") }
+                            items(sources) { source ->
                                 PanelRow(
-                                    label = label,
-                                    selected = true,
+                                    label = sourceLabel(source),
+                                    selected = source.url == activeSource?.url,
                                     onClick = {
+                                        viewModel.selectSource(source)
                                         panel = PlayerPanel.None
-                                        hud = Icons.Default.HighQuality to "Auto quality active"
+                                        hud = Icons.Default.HighQuality to "Switching to ${sourceLabel(source)}"
                                     }
+                                )
+                            }
+                            item {
+                                Text(
+                                    "Resolution choices depend on the selected stream. If the source exposes multiple video tracks, they appear above.",
+                                    color = TextDim,
+                                    fontSize = 12.sp,
+                                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
+                                )
+                            }
+                        } else {
+                            item { PanelHeader("Quality unavailable") }
+                            item {
+                                Text(
+                                    "This stream does not expose separate quality tracks or alternate servers.",
+                                    color = TextDim,
+                                    fontSize = 12.sp,
+                                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
                                 )
                             }
                         }
@@ -1608,6 +1620,32 @@ fun PlayerScreen(
                         }
                     }
                     PlayerPanel.Settings -> {
+                        item { PanelHeader("Quick controls") }
+                        item { PanelRow(label = "Video quality", selected = false, onClick = { panel = PlayerPanel.Quality }) }
+                        item { PanelRow(label = "Audio language", selected = false, onClick = { panel = PlayerPanel.Audio }) }
+                        item { PanelRow(label = "Subtitles & captions", selected = false, onClick = { panel = PlayerPanel.Subtitles }) }
+                        item { PanelRow(label = "Playback speed", selected = false, onClick = { panel = PlayerPanel.Speed }) }
+                        item {
+                            PanelRow(
+                                label = "Screen fit: $resizeLabel",
+                                selected = false,
+                                onClick = {
+                                    viewModel.cycleResizeMode()
+                                    hud = Icons.Default.AspectRatio to "Screen fit changed"
+                                }
+                            )
+                        }
+                        item {
+                            PanelRow(
+                                label = "Picture-in-picture",
+                                selected = false,
+                                onClick = { panel = PlayerPanel.None; enterPip() }
+                            )
+                        }
+                        if (uiState.mediaType != MediaType.MOVIE) {
+                            item { PanelRow(label = "Episodes & seasons", selected = false, onClick = { panel = PlayerPanel.Episodes }) }
+                        }
+                        item { PanelHeader("Playback preferences") }
                         item {
                             SettingToggleRow(
                                 title = "Auto-play next episode",
